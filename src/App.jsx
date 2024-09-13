@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="countries" element={<Countries />} />
-          <Route path="countries/:single" element={<SingleCountry />} />
+          <Route path="countries/:cca3" element={<SingleCountry />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>

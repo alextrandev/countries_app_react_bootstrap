@@ -14,7 +14,7 @@ export default function Countries() {
   const isLoading = useSelector(state => state.countries.isLoading);
   const searchInput = useSelector(state => state.countries.search);
 
-  console.log(countries[0]);
+  // console.log(countries[0]);
 
   useEffect(() => {
     dispatch(initializeCountries())
@@ -55,7 +55,7 @@ export default function Countries() {
       <Row xs={2} md={3} lg={4} className="g-3">
         {countries.map(country => (
           <Card className="h-100" key={country.cca3}>
-            <Link to={country.cca3} className="link-underline link-underline-opacity-0">
+            <Link to={country.cca3} className="link-underline link-underline-opacity-0" state={{ country: country }}>
               <Card.Img
                 variant="top"
                 src={country.flags.svg}
@@ -69,7 +69,7 @@ export default function Countries() {
               />
             </Link>
             <Card.Body className="d-flex flex-column">
-              <Link to={country.cca3} className="link-underline link-underline-opacity-0">
+              <Link to={country.cca3} className="link-underline link-underline-opacity-0" state={{ country: country }}>
                 <Card.Title>{country.name.common}</Card.Title>
                 <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
               </Link>
@@ -104,7 +104,7 @@ export default function Countries() {
                   </i>
                 </ListGroup.Item>
               </ListGroup>
-              <Link to={country.cca3} className="link-underline link-underline-opacity-0">
+              <Link to={country.cca3} className="link-underline link-underline-opacity-0" state={{ country: country }}>
                 <Button variant="primary">Read more {country.flag}</Button>
               </Link>
             </Card.Body>
