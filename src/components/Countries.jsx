@@ -14,7 +14,7 @@ export default function Countries() {
   const isLoading = useSelector(state => state.countries.isLoading);
   const searchInput = useSelector(state => state.countries.search);
 
-  console.log(countries);
+  console.log(countries[0]);
 
   useEffect(() => {
     dispatch(initializeCountries())
@@ -70,6 +70,37 @@ export default function Countries() {
               <Card.Body className="d-flex flex-column">
                 <Card.Title>{country.name.common}</Card.Title>
                 <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
+                {/* country infos */}
+                <ListGroup variant="flush" className="flex-grow-1 justify-content-center">
+                  {/* area */}
+                  <ListGroup.Item>
+                    <i className="bi bi-tree me-2"> {country.area.toLocaleString()} km2</i>
+                  </ListGroup.Item>
+                  {/* capital */}
+                  <ListGroup.Item>
+                    <i className="bi bi-geo me-2"> Capital: {country.capital}</i>
+                  </ListGroup.Item>
+                  {/* population */}
+                  <ListGroup.Item>
+                    <i className="bi bi-people me-2"> Population: {country.population.toLocaleString()}</i>
+                  </ListGroup.Item>
+                  {/* languages */}
+                  <ListGroup.Item>
+                    <i className="bi bi-mic me-2">
+                      {/* just a html space character (&nbsp;) */}
+                      &nbsp;{Object.values(country.languages || {}).join(", ")}
+                    </i>
+                  </ListGroup.Item>
+                  {/* currencies */}
+                  <ListGroup.Item>
+                    <i className="bi bi-cash-coin me-2">
+                      {Object.values(country.currencies || {})
+                        .map(currency => ` ${currency.name} (${currency.symbol})`)
+                        .join(", ")
+                      }
+                    </i>
+                  </ListGroup.Item>
+                </ListGroup>
                 <Button variant="primary">Read more {country.flag}</Button>
               </Card.Body>
             </Link>
