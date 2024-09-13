@@ -20,6 +20,19 @@ export default function Countries() {
     dispatch(initializeCountries())
   }, [dispatch]);
 
+  function debounce(func, timeout = 300) {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => { func.apply(this, args); }, timeout);
+    };
+  }
+  const filteredCountries = countries.filter(country => {
+    return country.name.common.toLowerCase().includes(searchInput.toLowerCase())
+  });
+  // console.log(filteredCountries); 
+  // to do ... firgure out debound filter
+
   // loading screen
   if (isLoading) {
     return (
