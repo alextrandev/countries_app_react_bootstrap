@@ -55,7 +55,7 @@ export default function Countries() {
       <Row xs={2} md={3} lg={4} className="g-3">
         {countries.map(country => (
           <Card className="h-100" key={country.cca3}>
-            <Link className="link-underline link-underline-opacity-0">
+            <Link to={country.cca3} className="link-underline link-underline-opacity-0">
               <Card.Img
                 variant="top"
                 src={country.flags.svg}
@@ -67,43 +67,47 @@ export default function Countries() {
                   maxHeight: "200px"
                 }}
               />
-              <Card.Body className="d-flex flex-column">
+            </Link>
+            <Card.Body className="d-flex flex-column">
+              <Link to={country.cca3} className="link-underline link-underline-opacity-0">
                 <Card.Title>{country.name.common}</Card.Title>
                 <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
-                {/* country infos */}
-                <ListGroup variant="flush" className="flex-grow-1 justify-content-center">
-                  {/* area */}
-                  <ListGroup.Item>
-                    <i className="bi bi-tree me-2"> {country.area.toLocaleString()} km2</i>
-                  </ListGroup.Item>
-                  {/* capital */}
-                  <ListGroup.Item>
-                    <i className="bi bi-geo me-2"> Capital: {country.capital}</i>
-                  </ListGroup.Item>
-                  {/* population */}
-                  <ListGroup.Item>
-                    <i className="bi bi-people me-2"> Population: {country.population.toLocaleString()}</i>
-                  </ListGroup.Item>
-                  {/* languages */}
-                  <ListGroup.Item>
-                    <i className="bi bi-mic me-2">
-                      {/* just a html space character (&nbsp;) */}
-                      &nbsp;{Object.values(country.languages || {}).join(", ")}
-                    </i>
-                  </ListGroup.Item>
-                  {/* currencies */}
-                  <ListGroup.Item>
-                    <i className="bi bi-cash-coin me-2">
-                      {Object.values(country.currencies || {})
-                        .map(currency => ` ${currency.name} (${currency.symbol})`)
-                        .join(", ")
-                      }
-                    </i>
-                  </ListGroup.Item>
-                </ListGroup>
+              </Link>
+              {/* country infos */}
+              <ListGroup variant="flush" className="flex-grow-1 justify-content-center">
+                {/* area */}
+                <ListGroup.Item>
+                  <i className="bi bi-tree me-2"> {country.area.toLocaleString()} km2</i>
+                </ListGroup.Item>
+                {/* capital */}
+                <ListGroup.Item>
+                  <i className="bi bi-geo me-2"> Capital: {country.capital}</i>
+                </ListGroup.Item>
+                {/* population */}
+                <ListGroup.Item>
+                  <i className="bi bi-people me-2"> Population: {country.population.toLocaleString()}</i>
+                </ListGroup.Item>
+                {/* languages */}
+                <ListGroup.Item>
+                  <i className="bi bi-mic me-2">
+                    {/* just a html space character (&nbsp;) */}
+                    &nbsp;{Object.values(country.languages || {}).join(", ")}
+                  </i>
+                </ListGroup.Item>
+                {/* currencies */}
+                <ListGroup.Item>
+                  <i className="bi bi-cash-coin me-2">
+                    {Object.values(country.currencies || {})
+                      .map(currency => ` ${currency.name} (${currency.symbol})`)
+                      .join(", ")
+                    }
+                  </i>
+                </ListGroup.Item>
+              </ListGroup>
+              <Link to={country.cca3} className="link-underline link-underline-opacity-0">
                 <Button variant="primary">Read more {country.flag}</Button>
-              </Card.Body>
-            </Link>
+              </Link>
+            </Card.Body>
           </Card>
         ))}
       </Row>

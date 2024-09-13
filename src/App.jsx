@@ -3,6 +3,7 @@ import Layout from "./pages/Layout"
 import Home from "./components/Home"
 import ErrorPage from "./components/ErrorPage"
 import Countries from "./components/Countries"
+import SingleCountry from "./components/SingleCountry"
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="countries" element={<Countries />} />
+          <Route path="countries/:single" element={<SingleCountry />} />
           <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
