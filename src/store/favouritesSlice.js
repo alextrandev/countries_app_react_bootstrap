@@ -9,9 +9,10 @@ export const favouritesSlice = createSlice({
   initialState,
   reducers: {
     addFavourite(state, action) {
-      state.favourites = [...state.favourites, action.payload]
+      // create and spread a Set here to remove duplication from the state
+      state.favourites = [...new Set([...state.favourites, action.payload])]
     },
-    clearFavourites(state, action) {
+    clearFavourites(state) {
       state.favourites = []
     },
     removeFavourites(state, action) {

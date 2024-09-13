@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { search } from "../store/countriesSlice";
 import { Link } from "react-router-dom";
+import { addFavourite, removeFavourites } from "../store/favouritesSlice";
 
 export default function Countries() {
   const dispatch = useDispatch();
@@ -117,9 +118,8 @@ export default function Countries() {
                   </i>
                 </ListGroup.Item>
               </ListGroup>
-              <Link to={country.cca3} className="link-underline link-underline-opacity-0" state={{ country: country }}>
-                <Button variant="primary">Read more {country.flag}</Button>
-              </Link>
+              <Button variant="primary" onClick={() => dispatch(addFavourite(country.cca3))}>Add to favorites {country.flag}</Button>
+              <Button variant="warning" onClick={() => dispatch(removeFavourites(country.cca3))}>Remove from favorites</Button>
             </Card.Body>
           </Card>
         ))}
