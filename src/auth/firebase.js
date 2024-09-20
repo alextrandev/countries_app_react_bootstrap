@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
-import {addDoc, collection, getFirestore} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, getDocs, getFirestore, query} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -52,10 +52,59 @@ const logout = () => {
   signOut(auth);
 }
 
+const addFavouriteToFirebase = async (uid, name) => {
+  try {
+    await addDoc(collection(db, `user/${uid}/favourites`), {name})
+  }
+  catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+}
+
+const removeFavouriteToFirebase = async (uid, name) => {
+  try {
+    if (!name) {
+      console.error("Error: Name parameter undefined");
+      return;
+    }
+    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+  }
+  catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+}
+
+const clearFavouritesFromFireBase = async (uid) => {
+  try {
+    if (!name) {
+      console.error("Error: Name parameter undefined");
+      return;
+    }
+    const q = query(collection(db, `user/${uid}/favourites`));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+  }
+  catch (error) {
+    console.log(error);
+    alert(error.message);
+  }
+}
+
 export {
   auth, 
   db, 
   loginWithEmailAndPassword, 
   registerWithEmailAndPassword,
-  logout
+  logout,
+  addFavouriteToFirebase,
+  removeFavouriteToFirebase,
+  clearFavouritesFromFireBase,
 };
