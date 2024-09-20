@@ -5,12 +5,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button } from 'react-bootstrap';
 import { auth, logout } from '../auth/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 const Layout = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   return (
     <Container fluid>
@@ -42,6 +41,9 @@ const Layout = () => {
                 }
               </Nav>
             </Navbar.Collapse>
+          </Container>
+          <Container className="justify-content-end">
+            Welcome, {user ? user.email : "guest"}!
           </Container>
         </Navbar>
       </Row>
