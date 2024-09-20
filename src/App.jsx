@@ -5,6 +5,7 @@ import ErrorPage from "./components/ErrorPage"
 import Countries from "./components/Countries"
 import SingleCountry from "./components/SingleCountry"
 import Favourites from './components/Favourites';
+import Register from "./components/Register"
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
+          <Route path="register" element={<Register />} />
           <Route path="countries" element={<Countries />} />
           <Route path="countries/:cca3" element={<SingleCountry />} />
           <Route path="favourites" element={<Favourites />} />
