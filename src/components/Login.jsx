@@ -23,26 +23,40 @@ export default function Login() {
   }
 
   return (
-    <div className="d-inline-flex flex-column gap-2 p-3">
-      <p>{user && `Hello user ${user.email}`}</p>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      <Button
-        onClick={handleLogin}
-      >
-        Login
-      </Button>
-      <Button onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
-    </div>
+    <form className="p-5">
+      <div className="form-group">
+        <label for="email">Email address</label>
+        {user && <p>`Hello user ${user.email}`</p>}
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          className="form-control"
+        />
+      </div>
+      <div className="form-group d-flex gap-3 py-3">
+        <Button
+          onClick={handleLogin}
+        >
+          Login
+        </Button>
+        <Button variant="secondary" onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
+      </div>
+      <div className="form-group">
+      </div>
+    </form >
   )
 }

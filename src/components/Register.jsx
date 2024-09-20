@@ -25,7 +25,7 @@ export default function Register() {
   // TODO: Add a check to see if user if logged in and navigate to countries
 
   return (
-    <div>
+    <div className="d-inline-flex flex-column gap-2 p-3">
       <input
         type="text"
         value={name}
