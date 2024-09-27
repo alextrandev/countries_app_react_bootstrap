@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3010:8081"
+    image: app:app
+    container_name: react_app_container
+    command: npm run dev
