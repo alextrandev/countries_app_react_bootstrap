@@ -25,8 +25,7 @@ export default function Login() {
   return (
     <form className="p-5">
       <div className="form-group">
-        <label for="email">Email address</label>
-        {user && <p>`Hello user ${user.email}`</p>}
+        <label htmlFor="email">Email address</label>
         <input
           type="email"
           id="email"
@@ -37,7 +36,7 @@ export default function Login() {
         />
       </div>
       <div className="form-group">
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           id="password"
