@@ -18,17 +18,18 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route>
+            <Route path="/" element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
 
-          <Route element={<ProtectedRoute user={user} />}>
-            <Route path="countries" element={<Countries />} />
-            <Route path="countries/:cca3" element={<SingleCountry />} />
-            <Route path="favourites" element={<Favourites />} />
+            <Route element={<ProtectedRoute user={user} />}>
+              <Route path="countries" element={<Countries />} />
+              <Route path="countries/:cca3" element={<SingleCountry />} />
+              <Route path="favourites" element={<Favourites />} />
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
           </Route>
-
-          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
