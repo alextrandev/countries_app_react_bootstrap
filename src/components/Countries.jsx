@@ -47,9 +47,15 @@ export default function Countries() {
 
   return (
     <Container fluid>
-      {/* search bar */}
+      {/* Header */}
       <Row className="gap-5 m-1">
         <Col className="mt-5 d-flex justify-content-center">
+          <h1>View all Countries</h1>
+        </Col>
+      </Row>
+      {/* search bar */}
+      <Row className="gap-5 m-1">
+        <Col className="mb-2 d-flex justify-content-end">
           <Form>
             <Form.Control
               style={{ width: "18rem" }}
