@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
-import {addDoc, collection, deleteDoc, getDocs, getFirestore, query} from "firebase/firestore";
+import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -54,7 +54,12 @@ const logout = () => {
 
 const addFavouriteToFirebase = async (uid, name) => {
   try {
-    await addDoc(collection(db, `user/${uid}/favourites`), {name})
+    // check if the country is already added to favourites
+    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      await addDoc(collection(db, `user/${uid}/favourites`), {name})
+    }
   }
   catch (error) {
     console.log(error);
