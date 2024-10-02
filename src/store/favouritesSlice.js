@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFavouriteToFirebase, auth } from "../auth/firebase";
-import { collection, query } from "firebase/firestore";
+import { addFavouriteToFirebase, auth, db } from "../auth/firebase";
+import { collection, getDocs, query } from "firebase/firestore";
 
 const initialState = {
   favourites: [],
@@ -20,7 +20,7 @@ export const favouritesSlice = createSlice({
     addFavourite(state, action) {
       // create and spread a Set here to remove duplication from the state
       state.favourites = [...new Set([...state.favourites, action.payload])]
-
+      // save to Firebase db
       const user = auth.currentUser;
       if (user) addFavouriteToFirebase(user.uid, action.payload);
     },
@@ -28,7 +28,7 @@ export const favouritesSlice = createSlice({
       state.favourites = []
     },
     removeFavourites(state, action) {
-      state.favourites = state.favourites.filter(country => country !== action.payload)
+      state.favourites = state.favourites.filter(country => country !== action.payload);
     },
   },
   extraReducers() {},
@@ -37,8 +37,9 @@ export const favouritesSlice = createSlice({
 export const getFavouritesFromSource = () => async (dispatch) => {
   const user = auth.currentUser;
   if (user) {
-    const q = query(collection(db, `user/${uid}/favourites`));
-    const favourites = q.docs.map((doc) => doc.data().name);
+    const q = query(collection(db, `user/${user.uid}/favourites`));
+    const querySnapshot = await getDocs(q);
+    const favourites = querySnapshot.docs.map((doc) => doc.data().name);
     dispatch(getFavourites(favourites));
     dispatch(setLoading(false));
   }

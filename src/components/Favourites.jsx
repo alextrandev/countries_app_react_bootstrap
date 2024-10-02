@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
-import { Form } from "react-router-dom";
-import { clearFavourites } from "../store/favouritesSlice";
+import { Button, Col, Container, Row, Spinner, Form } from "react-bootstrap";
+import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
 import SingleCountry from "./SingleCountry";
 
 export default function Favourites() {
@@ -14,14 +13,19 @@ export default function Favourites() {
   const favouritesLoading = useSelector((state) => state.favourites.isLoading);
   const countriesLoading = useSelector((state) => state.countries.isLoading);
 
-  if (favouritesList !== null) {
-    countriesList = countriesList.filter((country) => favouritesList.includes(country.name.common))
+  if (Array.isArray(favouritesList) && favouritesList.length > 0) {
+    countriesList = countriesList.filter((country) =>
+      favouritesList.includes(country.cca3)
+    );
   } else {
     countriesList = [];
   }
 
+  // console.log(countriesList);
+
   useEffect(() => {
     dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
   }, [dispatch])
 
   if (countriesLoading || favouritesLoading) {
@@ -58,11 +62,11 @@ export default function Favourites() {
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
         {countriesList
-          .filter((country) => {
-            return country.name.official
-              .toLowerCase()
-              .includes(search.toLowerCase());
-          })
+          // .filter((country) => {
+          //   return country.name.official
+          //     .toLowerCase()
+          //     .includes(search.toLowerCase());
+          // })
           .map((country) => (
             <SingleCountry key={country.name.common} country={country} />
           ))

@@ -4,12 +4,11 @@ import { Card, Col, Container, ListGroup, Row, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-export default function SingleCountry() {
+export default function SingleCountry(props) {
   // const cca3 = useParams().cca3;
   const location = useLocation();
-  const dispatch = useDispatch();
-  const country = location.state.country;
-  console.log(country);
+  const country = props.country ?? location.state.country;
+  // console.log(country);
   // const navigate = useNavigate();
 
   const [weather, setWeather] = useState({});
