@@ -2,7 +2,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useState } from "react";
 import { Button } from 'react-bootstrap';
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,7 +19,9 @@ export default function Login() {
       alert("Password is required");
       return;
     }
-    loginWithEmailAndPassword(email, password);
+    loginWithEmailAndPassword(email, password)
+      // redirect user to favourites page after logged in
+      .then(() => navigate("/favourites"));
   }
 
   return (
