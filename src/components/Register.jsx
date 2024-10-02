@@ -10,9 +10,13 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   // this hook handle auth state from firebase
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
+
+  if (user) {
+    navigate("/favourites")
+  }
 
   const handleRegister = () => {
     if (!name) {

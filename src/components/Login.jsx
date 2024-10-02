@@ -7,9 +7,13 @@ import { redirect, useNavigate } from "react-router-dom";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
+
+  if (user) {
+    navigate("/favourites")
+  }
 
   const handleLogin = () => {
     if (!email) {

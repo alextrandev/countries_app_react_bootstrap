@@ -20,9 +20,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route>
             <Route path="/" element={<Home />} />
-
-            {!user && <Route path="login" element={<Login />} />}
-            {!user && <Route path="register" element={<Register />} />}
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
 
             <Route element={<ProtectedRoute user={user} />}>
               <Route path="countries" element={<Countries />} />
