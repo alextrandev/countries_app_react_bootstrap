@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { Button, Col, Container, Row, Spinner, Form } from "react-bootstrap";
 import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
-import SingleCountry from "./SingleCountry";
+import CountryCard from "./CountryCard";
 
 export default function Favourites() {
   const [search, setSearch] = useState("");
@@ -14,14 +14,18 @@ export default function Favourites() {
   const countriesLoading = useSelector((state) => state.countries.isLoading);
 
   if (Array.isArray(favouritesList) && favouritesList.length > 0) {
-    countriesList = countriesList.filter((country) =>
-      favouritesList.includes(country.cca3)
-    );
+    countriesList = countriesList
+      // filter based on favourite countries list
+      .filter((country) => favouritesList.includes(country.cca3))
+      // search filter
+      .filter((country) => {
+        return country.name.official
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      })
   } else {
     countriesList = [];
   }
-
-  // console.log(countriesList);
 
   useEffect(() => {
     dispatch(initializeCountries());
@@ -57,20 +61,15 @@ export default function Favourites() {
           </Form>
         </Col>
       </Row>
-      <Row xs={2} md={3} lg={4} className="g-3">
-        <Button onClick={() => dispatch(clearFavourites())}>Clear favourites</Button>
+      <Row className="g-3">
+        <Col className="mt-4 d-flex justify-content-center">
+          <Button onClick={() => dispatch(clearFavourites())}>Clear favourites</Button>
+        </Col>
       </Row>
       <Row xs={2} md={3} lg={4} className="g-3">
-        {countriesList
-          // .filter((country) => {
-          //   return country.name.official
-          //     .toLowerCase()
-          //     .includes(search.toLowerCase());
-          // })
-          .map((country) => (
-            <SingleCountry key={country.name.common} country={country} />
-          ))
-        }
+        {countriesList.map((country) => (
+          <CountryCard key={country.name.common} country={country} />
+        ))}
       </Row>
     </Container >
   )
