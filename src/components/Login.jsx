@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { redirect, useNavigate } from "react-router-dom";
 import { getFavouritesFromSource } from "../store/favouritesSlice";
+import { Form, FormGroup } from "./Form";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -37,9 +38,8 @@ export default function Login() {
           <h1>Login</h1>
         </Col>
       </Row>
-      <form className="p-5 pt-0">
-        <div className="form-group">
-          <label htmlFor="email">Email address</label>
+      <Form>
+        <FormGroup name="Email address" id="email">
           <input
             type="email"
             id="email"
@@ -48,9 +48,8 @@ export default function Login() {
             placeholder="Email"
             className="form-control"
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
+        </FormGroup>
+        <FormGroup name="Password" id="password">
           <input
             type="password"
             id="password"
@@ -59,7 +58,7 @@ export default function Login() {
             placeholder="Password"
             className="form-control"
           />
-        </div>
+        </FormGroup>
         <div className="form-group d-flex gap-3 py-3">
           <Button
             onClick={handleLogin}
@@ -68,9 +67,7 @@ export default function Login() {
           </Button>
           <Button variant="secondary" onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
         </div>
-        <div className="form-group">
-        </div>
-      </form >
+      </Form >
     </Container>
   )
 }
