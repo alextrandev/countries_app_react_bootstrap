@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
 import { toast } from "react-toastify";
-import { getFavouritesFromSource } from "../store/favouritesSlice";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -86,20 +85,24 @@ const addFavouriteToFirebase = async (uid, name) => {
     // check if the country is already added to favourites
     const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
     const querySnapshot = await getDocs(q);
+
     if (querySnapshot.empty) {
       await addDoc(collection(db, `user/${uid}/favourites`), {name})
+      toast.success('Country added to favourites');
+    } else {
+      toast.info('Country already in favourites');
     }
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.log("Error", error.message);
+    toast.error('Cant add country to favourite, try again!');
   }
 }
 
-const removeFavouriteToFirebase = async (uid, name) => {
+const removeFavouriteFormFirebase = async (uid, name) => {
   try {
     if (!name) {
-      console.error("Error: Name parameter undefined");
+      toast.error('Cant remove country from favourites, try again!');
       return;
     }
     const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
@@ -107,28 +110,26 @@ const removeFavouriteToFirebase = async (uid, name) => {
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
     });
+    toast.info('Country removed from favourites');
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.log("Error", error.message);
+    toast.error('Cant remove country from favourites, try again!');
   }
 }
 
 const clearFavouritesFromFireBase = async (uid) => {
   try {
-    if (!name) {
-      console.error("Error: Name parameter undefined");
-      return;
-    }
     const q = query(collection(db, `user/${uid}/favourites`));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
     });
+    toast.info('Removed all countries from favourites');
   }
   catch (error) {
     console.log(error);
-    alert(error.message);
+    toast.error('Cant remove countries from favourites, try again!');
   }
 }
 
@@ -139,6 +140,6 @@ export {
   registerWithEmailAndPassword,
   logout,
   addFavouriteToFirebase,
-  removeFavouriteToFirebase,
+  removeFavouriteFormFirebase,
   clearFavouritesFromFireBase,
 };
