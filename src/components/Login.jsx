@@ -16,7 +16,7 @@ export default function Login() {
 
   if (user) {
     navigate("/favourites")
-  }
+  };
 
   const handleLogin = () => {
     // stop the function and give noti if any field is not filled
@@ -29,10 +29,12 @@ export default function Login() {
     }
 
     loginWithEmailAndPassword(email, password)
-      // redirect user to favourites page after logged in
-      .then(() => getFavouritesFromSource())
-      .then(() => navigate("/favourites"));
-  }
+    if (user) {
+      toast.success('Successfully logged in!');
+      getFavouritesFromSource()
+        .then(() => navigate("/favourites"));
+    }
+  };
 
   return (
     <Container fluid>

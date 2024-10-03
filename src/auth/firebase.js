@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
 import { toast } from "react-toastify";
+import { getFavouritesFromSource } from "../store/favouritesSlice";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,20 +23,20 @@ const db = getFirestore(app);
 const loginWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    toast.success('Successfully logged in!');
   }
   catch (error) {
     // error handling block. show user a notification toast and end the function
     switch (error.code) {
       case "auth/invalid-email":
         toast.error("Invalid email");
-        break;
+        return;
       case "auth/invalid-credential":
         toast.error("Wrong username or password");
-        break;
+        return;
       default:
         toast.error("Something unexpected happened. Please try again!")
         console.log("Error", error.message);
+        return;
     }
   }
 }
@@ -44,19 +45,28 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-
     // use firebase db
     await addDoc(collection(db, "user"), {
         uid: user.uid,
-        // shorthand for `name: name,`
-        name,
+        name, // shorthand for `name: name,`
         authProvider: "local",
         email,
-    })
+    });
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    // error handling and show toast notification
+    switch (error.code) {
+      case "auth/invalid-email":
+        toast.error("Invalid email");
+        return;
+      case "auth/invalid-email":
+        toast.error("Invalid email");
+        return;
+      default:
+        toast.error("Something went wrong. Please try again!");
+        console.log("Error", error.message);
+        return;
+    }
   }
 }
 
