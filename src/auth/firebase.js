@@ -80,14 +80,26 @@ const logout = () => {
   toast.success('Successfully logged out!');
 }
 
+const getFavouritesFromFirebase = async (uid) => {
+  try {
+    const q = query(collection(db, `favourite/${uid}/countries`));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data().name);
+  }
+  catch (error) {
+    console.log("Error", error.message);
+    toast.error('Cant fetch favourites data, please refresh page!');
+  }
+}
+
 const addFavouriteToFirebase = async (uid, name) => {
   try {
     // check if the country is already added to favourites
-    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const q = query(collection(db, `favourite/${uid}/countries`), where("name", "==", name));
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
-      await addDoc(collection(db, `user/${uid}/favourites`), {name})
+      await addDoc(collection(db, `favourite/${uid}/countries`), {name})
       toast.success('Country added to favourites');
     } else {
       toast.info('Country already in favourites');
@@ -105,7 +117,7 @@ const removeFavouriteFormFirebase = async (uid, name) => {
       toast.error('Cant remove country from favourites, try again!');
       return;
     }
-    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const q = query(collection(db, `favourite/${uid}/countries`), where("name", "==", name));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
@@ -120,7 +132,7 @@ const removeFavouriteFormFirebase = async (uid, name) => {
 
 const clearFavouritesFromFireBase = async (uid) => {
   try {
-    const q = query(collection(db, `user/${uid}/favourites`));
+    const q = query(collection(db, `favourite/${uid}/countries`));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
@@ -139,6 +151,7 @@ export {
   loginWithEmailAndPassword, 
   registerWithEmailAndPassword,
   logout,
+  getFavouritesFromFirebase,
   addFavouriteToFirebase,
   removeFavouriteFormFirebase,
   clearFavouritesFromFireBase,
