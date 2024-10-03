@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { initializeCountries } from "../services/countriesServices";
-import { Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
 import CountryCard from "./CountryCard";
+import LoadingScreen from "./LoadingScreen";
 
 export default function Countries() {
   const dispatch = useDispatch();
@@ -33,16 +34,7 @@ export default function Countries() {
 
   // loading screen
   if (isLoading) {
-    return (
-      <Col className="text-center m-5">
-        <Spinner
-          animation="border"
-          role="status"
-          className="center"
-          variant="info"
-        />
-      </Col>
-    )
+    return <LoadingScreen />
   }
 
   return (

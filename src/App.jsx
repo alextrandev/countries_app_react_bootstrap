@@ -12,7 +12,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./auth/firebase";
 
 function App() {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
   return (
     <BrowserRouter>
@@ -23,7 +23,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
 
-            <Route element={<ProtectedRoute user={user} />}>
+            <Route element={<ProtectedRoute user={user} loading={loading} />}>
               <Route path="countries" element={<Countries />} />
               <Route path="countries/:cca3" element={<SingleCountry />} />
               <Route path="favourites" element={<Favourites />} />

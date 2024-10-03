@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Card, Col, Container, ListGroup, Row, Spinner } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import LoadingScreen from "./LoadingScreen";
 
 export default function SingleCountry(props) {
   // const cca3 = useParams().cca3;
@@ -40,16 +40,7 @@ export default function SingleCountry(props) {
 
   // loading screen
   if (weatherLoading) {
-    return (
-      <Col className="text-center m-5">
-        <Spinner
-          animation="border"
-          role="status"
-          className="center"
-          variant="info"
-        />
-      </Col>
-    )
+    return <LoadingScreen />
   }
 
   return (

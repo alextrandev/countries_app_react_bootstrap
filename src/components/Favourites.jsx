@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
-import { Button, Col, Container, Row, Spinner, Form } from "react-bootstrap";
+import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
 import CountryCard from "./CountryCard";
+import LoadingScreen from "./LoadingScreen";
 
 export default function Favourites() {
   const [search, setSearch] = useState("");
@@ -33,16 +34,7 @@ export default function Favourites() {
   }, [dispatch])
 
   if (countriesLoading || favouritesLoading) {
-    return (
-      <Col className="text-center m-5">
-        <Spinner
-          animation="border"
-          role="status"
-          className="center"
-          variant="info"
-        />
-      </Col>
-    )
+    return <LoadingScreen />
   }
 
   return (

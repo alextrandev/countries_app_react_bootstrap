@@ -53,7 +53,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
         authProvider: "local",
         email,
     });
-    toast('🌎 Successfully registered. Welcome to countries app!');
+    toast('🌎 Welcome to countries app!');
   }
   catch (error) {
     console.log(error.code);
@@ -78,6 +78,7 @@ const registerWithEmailAndPassword = async (name, email, password) => {
 
 const logout = () => {
   signOut(auth);
+  toast.success('Successfully logged out!');
 }
 
 const addFavouriteToFirebase = async (uid, name) => {
