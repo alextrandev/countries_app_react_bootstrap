@@ -2,9 +2,10 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useState } from "react";
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getFavouritesFromSource } from "../store/favouritesSlice";
 import { Form, FormGroup } from "./Form";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,6 +29,7 @@ export default function Login() {
     loginWithEmailAndPassword(email, password)
       // redirect user to favourites page after logged in
       .then(() => getFavouritesFromSource())
+      .then(() => toast.success('Successfully logged in!'))
       .then(() => navigate("/favourites"));
   }
 

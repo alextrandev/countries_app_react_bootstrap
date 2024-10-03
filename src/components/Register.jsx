@@ -4,6 +4,7 @@ import { auth, registerWithEmailAndPassword } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Form, FormGroup } from "./Form";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -24,7 +25,9 @@ export default function Register() {
       alert("Name is required");
       return;
     }
-    registerWithEmailAndPassword(name, email, password);
+    registerWithEmailAndPassword(name, email, password)
+      .then(() => toast.success('🌎 Successfully registered. Welcome to countries app!'))
+      .then(() => navigate("/favourites"));
   }
 
   // TODO: Add a check to see if user if logged in and navigate to countries
