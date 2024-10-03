@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth, registerWithEmailAndPassword } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
@@ -16,18 +16,19 @@ export default function Register() {
 
   const navigate = useNavigate();
 
-  if (user) {
-    navigate("/favourites")
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/favourites");
+    }
+  }, [user, navigate]);
 
   const handleRegister = () => {
-    if (!name) {
-      alert("Name is required");
+    // stop the function and show a toast
+    if (!name || !email || !password) {
+      toast.warn('Please fill in all fields');
       return;
     }
-    registerWithEmailAndPassword(name, email, password)
-      .then(() => toast.success('🌎 Successfully registered. Welcome to countries app!'))
-      .then(() => navigate("/favourites"));
+    registerWithEmailAndPassword(name, email, password);
   }
 
   // TODO: Add a check to see if user if logged in and navigate to countries

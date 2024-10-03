@@ -1,6 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { getFavouritesFromSource } from "../store/favouritesSlice";
@@ -14,9 +14,11 @@ export default function Login() {
 
   const navigate = useNavigate();
 
-  if (user) {
-    navigate("/favourites")
-  };
+  useEffect(() => {
+    if (user) {
+      navigate("/favourites");
+    }
+  }, [user, navigate]);
 
   const handleLogin = () => {
     // stop the function and give noti if any field is not filled
@@ -29,11 +31,6 @@ export default function Login() {
     }
 
     loginWithEmailAndPassword(email, password)
-    if (user) {
-      toast.success('Successfully logged in!');
-      getFavouritesFromSource()
-        .then(() => navigate("/favourites"));
-    }
   };
 
   return (

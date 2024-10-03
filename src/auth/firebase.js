@@ -23,6 +23,7 @@ const db = getFirestore(app);
 const loginWithEmailAndPassword = async (email, password) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    toast.success('Successfully logged in!');
   }
   catch (error) {
     // error handling block. show user a notification toast and end the function
@@ -52,15 +53,20 @@ const registerWithEmailAndPassword = async (name, email, password) => {
         authProvider: "local",
         email,
     });
+    toast('🌎 Successfully registered. Welcome to countries app!');
   }
   catch (error) {
+    console.log(error.code);
     // error handling and show toast notification
     switch (error.code) {
       case "auth/invalid-email":
         toast.error("Invalid email");
         return;
-      case "auth/invalid-email":
-        toast.error("Invalid email");
+      case "auth/weak-password":
+        toast.error("Password is too weak. Minimum 6 characters");
+        return;
+      case "auth/email-already-in-use":
+        toast.error("Email already in use. Login or use another email");
         return;
       default:
         toast.error("Something went wrong. Please try again!");
