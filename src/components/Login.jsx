@@ -19,17 +19,18 @@ export default function Login() {
   }
 
   const handleLogin = () => {
+    // stop the function and give noti if any field is not filled
     if (!email) {
-      alert("Email is required");
+      toast.warn('Email is required');
       return;
     } else if (!password) {
-      alert("Password is required");
+      toast.warn('Password is required');
       return;
     }
+
     loginWithEmailAndPassword(email, password)
       // redirect user to favourites page after logged in
       .then(() => getFavouritesFromSource())
-      .then(() => toast.success('Successfully logged in!'))
       .then(() => navigate("/favourites"));
   }
 

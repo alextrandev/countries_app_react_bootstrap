@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,11 +21,22 @@ const db = getFirestore(app);
 
 const loginWithEmailAndPassword = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password);
+    toast.success('Successfully logged in!');
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    // error handling block. show user a notification toast and end the function
+    switch (error.code) {
+      case "auth/invalid-email":
+        toast.error("Invalid email");
+        break;
+      case "auth/invalid-credential":
+        toast.error("Wrong username or password");
+        break;
+      default:
+        toast.error("Something unexpected happened. Please try again!")
+        console.log("Error", error.message);
+    }
   }
 }
 
