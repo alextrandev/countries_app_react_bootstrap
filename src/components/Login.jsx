@@ -1,61 +1,75 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
-import { useState } from "react";
-import { Button } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import { getFavouritesFromSource } from "../store/favouritesSlice";
+import { Form, FormGroup } from "./Form";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (user) {
+      navigate("/favourites");
+    }
+  }, [user, navigate]);
+
   const handleLogin = () => {
+    // stop the function and give noti if any field is not filled
     if (!email) {
-      alert("Email is required");
+      toast.warn('Email is required');
       return;
     } else if (!password) {
-      alert("Password is required");
+      toast.warn('Password is required');
       return;
     }
-    loginWithEmailAndPassword(email, password);
-  }
+
+    loginWithEmailAndPassword(email, password)
+  };
 
   return (
-    <form className="p-5">
-      <div className="form-group">
-        <label htmlFor="email">Email address</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="form-control"
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="form-control"
-        />
-      </div>
-      <div className="form-group d-flex gap-3 py-3">
-        <Button
-          onClick={handleLogin}
-        >
-          Login
-        </Button>
-        <Button variant="secondary" onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
-      </div>
-      <div className="form-group">
-      </div>
-    </form >
+    <Container fluid>
+      <Row className="m-1">
+        <Col className="mt-5 d-flex justify-content-center">
+          <h1>Login</h1>
+        </Col>
+      </Row>
+      <Form>
+        <FormGroup name="Email address" id="email">
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="form-control"
+          />
+        </FormGroup>
+        <FormGroup name="Password" id="password">
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="form-control"
+          />
+        </FormGroup>
+        <div className="form-group d-flex gap-3 py-3">
+          <Button
+            onClick={handleLogin}
+          >
+            Login
+          </Button>
+          <Button variant="secondary" onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
+        </div>
+      </Form >
+    </Container>
   )
 }

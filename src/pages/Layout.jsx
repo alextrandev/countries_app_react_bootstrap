@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { LinkContainer } from 'react-router-bootstrap';
 import { auth, logout } from '../auth/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   const [user] = useAuthState(auth);
@@ -28,10 +29,10 @@ const Layout = () => {
                 <LinkContainer to="/favourites">
                   <Nav.Link>Favorites</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/login">
+                <LinkContainer to="/login" disabled={user}>
                   <Nav.Link>Login</Nav.Link>
                 </LinkContainer>
-                <LinkContainer to="/register">
+                <LinkContainer to="/register" disabled={user}>
                   <Nav.Link>Register</Nav.Link>
                 </LinkContainer>
                 {user &&

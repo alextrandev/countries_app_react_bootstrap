@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
+import { toast } from "react-toastify";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,11 +21,23 @@ const db = getFirestore(app);
 
 const loginWithEmailAndPassword = async (email, password) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password);
+    toast.success('Successfully logged in!');
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    // error handling block. show user a notification toast and end the function
+    switch (error.code) {
+      case "auth/invalid-email":
+        toast.error("Invalid email");
+        return;
+      case "auth/invalid-credential":
+        toast.error("Wrong username or password");
+        return;
+      default:
+        toast.error("Something unexpected happened. Please try again!")
+        console.log("Error", error.message);
+        return;
+    }
   }
 }
 
@@ -32,74 +45,103 @@ const registerWithEmailAndPassword = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
-
     // use firebase db
     await addDoc(collection(db, "user"), {
         uid: user.uid,
-        // shorthand for `name: name,`
-        name,
+        name, // shorthand for `name: name,`
         authProvider: "local",
         email,
-    })
+    });
+    toast('🌎 Welcome to countries app!');
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.log(error.code);
+    // error handling and show toast notification
+    switch (error.code) {
+      case "auth/invalid-email":
+        toast.error("Invalid email");
+        return;
+      case "auth/weak-password":
+        toast.error("Password is too weak. Minimum 6 characters");
+        return;
+      case "auth/email-already-in-use":
+        toast.error("Email already in use. Login or use another email");
+        return;
+      default:
+        toast.error("Something went wrong. Please try again!");
+        console.log("Error", error.message);
+        return;
+    }
   }
 }
 
 const logout = () => {
   signOut(auth);
+  toast.success('Successfully logged out!');
+}
+
+const getFavouritesFromFirebase = async (uid) => {
+  try {
+    const q = query(collection(db, `favourite/${uid}/countries`));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => doc.data().name);
+  }
+  catch (error) {
+    console.log("Error", error.message);
+    toast.error('Cant fetch favourites data, please refresh page!');
+  }
 }
 
 const addFavouriteToFirebase = async (uid, name) => {
   try {
     // check if the country is already added to favourites
-    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const q = query(collection(db, `favourite/${uid}/countries`), where("name", "==", name));
     const querySnapshot = await getDocs(q);
+
     if (querySnapshot.empty) {
-      await addDoc(collection(db, `user/${uid}/favourites`), {name})
+      await addDoc(collection(db, `favourite/${uid}/countries`), {name})
+      toast.success('Country added to favourites');
+    } else {
+      toast.info('Country already in favourites');
     }
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.log("Error", error.message);
+    toast.error('Cant add country to favourite, try again!');
   }
 }
 
-const removeFavouriteToFirebase = async (uid, name) => {
+const removeFavouriteFormFirebase = async (uid, name) => {
   try {
     if (!name) {
-      console.error("Error: Name parameter undefined");
+      toast.error('Cant remove country from favourites, try again!');
       return;
     }
-    const q = query(collection(db, `user/${uid}/favourites`), where("name", "==", name));
+    const q = query(collection(db, `favourite/${uid}/countries`), where("name", "==", name));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
     });
+    toast.info('Country removed from favourites');
   }
   catch (error) {
-    console.log(error);
-    alert(error.message);
+    console.log("Error", error.message);
+    toast.error('Cant remove country from favourites, try again!');
   }
 }
 
 const clearFavouritesFromFireBase = async (uid) => {
   try {
-    if (!name) {
-      console.error("Error: Name parameter undefined");
-      return;
-    }
-    const q = query(collection(db, `user/${uid}/favourites`));
+    const q = query(collection(db, `favourite/${uid}/countries`));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
     });
+    toast.info('Removed all countries from favourites');
   }
   catch (error) {
     console.log(error);
-    alert(error.message);
+    toast.error('Cant remove countries from favourites, try again!');
   }
 }
 
@@ -109,7 +151,8 @@ export {
   loginWithEmailAndPassword, 
   registerWithEmailAndPassword,
   logout,
+  getFavouritesFromFirebase,
   addFavouriteToFirebase,
-  removeFavouriteToFirebase,
+  removeFavouriteFormFirebase,
   clearFavouritesFromFireBase,
 };
