@@ -9,6 +9,7 @@ import testResponse from "../lib/testResponse";
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
+
 const api = express();
 const router = Router();
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
@@ -31,7 +32,7 @@ router.get("/fetch-trivials", async (req, res) => {
   `;
 
   try {
-    // this is just test response to save api token
+    // below is just test response to save api token
     // return res.status(200).json(testResponse);
 
     // generate question in the required format
@@ -49,6 +50,7 @@ router.get("/fetch-trivials", async (req, res) => {
       return res.status(500).json({ error: "No response from OpenAI" });
     }
 
+    // parsing error handling
     let trivials;
     try {
     trivials = JSON.parse(aiResponse);
@@ -57,6 +59,7 @@ router.get("/fetch-trivials", async (req, res) => {
       return res.status(500).json({ error: "Failed to process OpenAI response" });
     }
 
+    // response array length check
     if (!Array.isArray(trivials) || trivials.length < 15) {
       console.log(`Error: expected 15 facts, recieved ${trivials.length}`);
       return res.status(500).json({ error: "AI failed to provide expected response" });
@@ -73,6 +76,7 @@ router.get("/fetch-trivials", async (req, res) => {
 
 // middleware for express to parse JSON body
 api.use(express.json());
+// middleware for route name change from /.netlify/functions/aiTrivial/ to /api/. Also need to update in ~/netlify.toml
 api.use("/api/", router);
 
 export const handler = serverless(api);
