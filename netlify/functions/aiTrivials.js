@@ -3,6 +3,7 @@ import sampleResponse from "../lib/sampleAiTrivialsResponse.json";
 import express, { Router } from 'express';
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
+import testResponse from "../lib/testResponse";
 
 // Load environment variables from .env file during local development
 if (process.env.NODE_ENV !== 'production') {
@@ -10,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const api = express();
 const router = Router();
-const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
+// const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 // express route
 router.get("/fetch-trivials", async (req, res) => {
@@ -30,6 +31,7 @@ router.get("/fetch-trivials", async (req, res) => {
   `;
 
   try {
+    /**
     // generate question in the required format
     const completion = await openai.chat.completions.create({
       messages: [{role: 'user', content: prompt}],
@@ -60,6 +62,10 @@ router.get("/fetch-trivials", async (req, res) => {
 
     // return the trivia facts
     return res.status(200).json(trivials);
+    */
+
+    // this is just test response to save api token. uncommend above block on production
+    return res.status(200).json(testResponse);
 
   } catch (error) {
     console.error("Error:", error.message);
