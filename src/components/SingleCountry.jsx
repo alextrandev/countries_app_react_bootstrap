@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import LoadingScreen from "./LoadingScreen";
 import { fetchWeatherInfo } from "../services/weatherService";
 import Header from "./Header";
+import AiTrivialsCard from "./AiTrivialsCard";
 
 export default function SingleCountry(props) {
   const location = useLocation();
@@ -30,6 +31,7 @@ export default function SingleCountry(props) {
     <>
       <Container fluid className="p-5">
         <Header title={country.name.common} />
+        <AiTrivialsCard countryCode={country.cca3} />
         <Row className="d-flex flex-column align-items-center">
           <Col className="mt-5 d-flex flex-column justify-content-center">
             <Card.Img

@@ -24,7 +24,7 @@ export default function CountryCard({ country }) {
         />
       </Link>
       <Card.Body className="d-flex flex-column">
-        <Link to={country.cca3} className="link-underline link-underline-opacity-0" state={{ country: country }}>
+        <Link to={`/countries/${country.cca3}`} className="link-underline link-underline-opacity-0" state={{ country: country }}>
           <Card.Title>{country.name.common}</Card.Title>
           <Card.Subtitle className="mb-5 text-muted">{country.name.official}</Card.Subtitle>
         </Link>
