@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 import fetchTrivials from "../services/trivialsService";
 
 const initialState = {
   trivials: [],
-  isLoading: true,
+  isLoading: false,
   isInitialized: false,
   currentTrivial: {},
 }
@@ -36,6 +36,7 @@ export const getTrivialsFromSource = (cca3) => async (dispatch) => {
 }
 
 export const showTrivial = (cca3) => async (dispatch, getState) => {
+  dispatch(setInitialized(true));
   let state = getState().trivials;
 
   if (state.trivials.length === 0) {
@@ -46,7 +47,6 @@ export const showTrivial = (cca3) => async (dispatch, getState) => {
   if (state.trivials.length > 0) {
     const current = state.trivials[0];
     dispatch(setCurrentTrivial(current));
-    dispatch(setInitialized(true));
     dispatch(getTrivials(state.trivials.slice(1)));
   }
 };

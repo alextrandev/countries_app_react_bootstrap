@@ -30,7 +30,7 @@ export default function SingleCountry(props) {
   return (
     <>
       <Container fluid className="p-5">
-        <Header title={country.name.common} />
+        <Header title={`${country.name.common} ${country.flag}`} />
         <AiTrivialsCard country={country} />
         <Row className="d-flex flex-column align-items-center">
           <Col className="mt-5 d-flex flex-column justify-content-center">

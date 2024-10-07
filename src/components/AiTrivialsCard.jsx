@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { showTrivial } from '../store/trivialsSlice';
+import LoadingScreen from './LoadingScreen';
 
 export default function AiTrivialsCard({ country }) {
   const countryName = country.name.common;
@@ -14,7 +15,7 @@ export default function AiTrivialsCard({ country }) {
 
   return (
     <Row>
-      <Card>
+      <Card className='bg-light shadow'>
         <Card.Body>
           <Card.Title>
             <i className="bi bi-x-diamond-fill me-2"></i>
@@ -25,12 +26,19 @@ export default function AiTrivialsCard({ country }) {
           </Card.Text>
         </Card.Body>
         <Card.Body>
-          <Button onClick={() => dispatch(showTrivial(countryCode))}>Show fact about {countryName}</Button>
+          <Button variant='success' onClick={() => dispatch(showTrivial(countryCode))} disabled={trivialsLoading && "disabled"}>
+            {isInitialized ? "Show another" : "Show"} fact about {countryName}
+          </Button>
         </Card.Body>
         {isInitialized &&
           <ListGroup className="list-group-flush">
-            {!trivialsLoading &&
-              <ListGroup.Item>{currentTrivial.fact}</ListGroup.Item>
+            {!trivialsLoading
+              ? <ListGroup.Item className='bg-light'>{currentTrivial.fact}</ListGroup.Item>
+              : <>
+                <LoadingScreen>
+                  <p>Looking for fact about {countryName} {country.flag}<br />Please wait</p>
+                </LoadingScreen>
+              </>
             }
           </ListGroup>
         }

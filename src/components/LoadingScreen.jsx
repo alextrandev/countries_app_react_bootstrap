@@ -1,6 +1,6 @@
 import { Col, Spinner } from "react-bootstrap";
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ children }) {
   return (
     <Col className="text-center m-5">
       <Spinner
@@ -9,6 +9,7 @@ export default function LoadingScreen() {
         className="center"
         variant="info"
       />
+      {children}
     </Col>
   )
 }
