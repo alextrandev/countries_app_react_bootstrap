@@ -1,6 +1,6 @@
 import OpenAI from "openai";
 import sampleResponse from "../lib/sampleAiTrivialsResponse.json";
-import express from 'express';
+import express, { Router } from 'express';
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
 
@@ -8,15 +8,12 @@ import dotenv from 'dotenv';
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
-configDotenv
 const api = express();
+const router = Router();
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
-// middleware for express to parse JSON body
-api.use(express.json());
-
 // express route
-api.get("/fetch-trivials", async (req, res) => {
+router.get("/fetch-trivials", async (req, res) => {
   const {cca3} = req.query;
 
   if (!cca3) {
@@ -68,7 +65,10 @@ api.get("/fetch-trivials", async (req, res) => {
     console.error("Error:", error.message);
     return res.status(500).json({ error: "Internal server error" });
   }
-
 });
+
+// middleware for express to parse JSON body
+api.use(express.json());
+api.use("/api/", router);
 
 export const handler = serverless(api);
