@@ -5,6 +5,7 @@ import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
 import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
+import Header from "./Header";
 
 export default function Favourites() {
   const [search, setSearch] = useState("");
@@ -39,11 +40,7 @@ export default function Favourites() {
 
   return (
     <Container fluid>
-      <Row className="gap-5 m-1">
-        <Col className="mt-5 d-flex justify-content-center">
-          <h1>Your favourite countries</h1>
-        </Col>
-      </Row>
+      <Header title="Your favourite countries" />
       <Row className="mb-3">
         <Col className="d-flex justify-content-start">
           <Button variant="danger" onClick={() => dispatch(clearFavourites())}>Clear favourites</Button>
