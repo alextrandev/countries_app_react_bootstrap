@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Form, FormGroup } from "./Form";
 import { toast } from "react-toastify";
+import Header from "./Header";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -35,12 +36,8 @@ export default function Register() {
 
   return (
 
-    <Container fluid>
-      <Row className="m-1">
-        <Col className="mt-5 d-flex justify-content-center">
-          <h1>Register</h1>
-        </Col>
-      </Row>
+    <Container fluid className="p-5">
+      <Header title="Register" />
       <Form >
         <FormGroup name="Full name" id="fullname">
           <input

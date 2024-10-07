@@ -1,44 +1,28 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import LoadingScreen from "./LoadingScreen";
+import { fetchWeatherInfo } from "../services/weatherService";
+import Header from "./Header";
+import AiTrivialsCard from "./AiTrivialsCard";
 
 export default function SingleCountry(props) {
-  // const cca3 = useParams().cca3;
   const location = useLocation();
   const country = props.country ?? location.state.country;
-  // console.log(country);
-  // const navigate = useNavigate();
 
   const [weather, setWeather] = useState({});
   const [weatherLoading, setWeatherLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(
-        // base weather api url
-        `https://api.openweathermap.org/data/2.5/weather?`
-        // pass the latitude and longtitude of the capital
-        + `lat=${country.capitalInfo.latlng[0]}&lon=${country.capitalInfo.latlng[1]}`
-        // pass other parameters and api key
-        + `&units=metric&appid=${import.meta.env.VITE_OPENWEATHER_API_KEY}`
-      )
-      .catch(error => console.log(error))
-      .then(res => {
-        setWeather(res.data);
-        setWeatherLoading(false);
-      })
+    fetchWeatherInfo(country, setWeather, setWeatherLoading);
   }, [country.capital]);
+
   const utcDate = new Date(); // get current utc date time
   const localDate = new Date(utcDate.getTime() + weather.timezone * 1000);
   const dateTimeString = localDate.toLocaleString();
   const roundTemp = t => Math.round(t);
   const capitalized = s => s[0].toUpperCase() + s.slice(1);
 
-  // need to handle error when user go to single page without visiting the countries page
-
-  // loading screen
   if (weatherLoading) {
     return <LoadingScreen />
   }
@@ -46,6 +30,8 @@ export default function SingleCountry(props) {
   return (
     <>
       <Container fluid className="p-5">
+        <Header title={`${country.name.common} ${country.flag}`} />
+        <AiTrivialsCard country={country} />
         <Row className="d-flex flex-column align-items-center">
           <Col className="mt-5 d-flex flex-column justify-content-center">
             <Card.Img

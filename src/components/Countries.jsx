@@ -5,6 +5,7 @@ import { Col, Container, Form, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
 import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
+import Header from "./Header";
 
 export default function Countries() {
   const dispatch = useDispatch();
@@ -38,13 +39,8 @@ export default function Countries() {
   }
 
   return (
-    <Container fluid>
-      {/* Header */}
-      <Row className="gap-5 m-1">
-        <Col className="mt-5 d-flex justify-content-center">
-          <h1>View all Countries</h1>
-        </Col>
-      </Row>
+    <Container fluid className="p-5">
+      <Header title="View all countries" />
       {/* search bar */}
       <Row className="gap-5 m-1">
         <Col className="mb-2 d-flex justify-content-end">

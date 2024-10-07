@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getFavouritesFromSource } from "../store/favouritesSlice";
 import { Form, FormGroup } from "./Form";
 import { toast } from "react-toastify";
+import Header from "./Header";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -34,12 +35,8 @@ export default function Login() {
   };
 
   return (
-    <Container fluid>
-      <Row className="m-1">
-        <Col className="mt-5 d-flex justify-content-center">
-          <h1>Login</h1>
-        </Col>
-      </Row>
+    <Container fluid className="p-5">
+      <Header title="Login" />
       <Form>
         <FormGroup name="Email address" id="email">
           <input
