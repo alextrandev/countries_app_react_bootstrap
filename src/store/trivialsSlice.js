@@ -4,7 +4,7 @@ import fetchTrivials from "../services/trivialsService";
 const initialState = {
   trivials: {},
   isLoading: false,
-  isInitialized: false,
+  isInitialized: {},
   currentTrivial: {},
 }
 
@@ -20,7 +20,8 @@ export const trivialsSlice = createSlice({
       state.isLoading = action.payload;
     },
     setInitialized(state, action) {
-      state.isInitialized = action.payload;
+      const { cca3, bool } = action.payload;
+      state.isInitialized[cca3] = bool;
     },
     setCurrentTrivial(state, action) {
       const { cca3, currentTrivial } = action.payload;
@@ -38,7 +39,7 @@ export const getTrivialsFromSource = (cca3) => async (dispatch) => {
 }
 
 export const showTrivial = (cca3) => async (dispatch, getState) => {
-  dispatch(setInitialized(true));
+  dispatch(setInitialized({ cca3, bool: true }));
   let state = getState().trivials;
 
   if (!state.trivials[cca3] || state.trivials[cca3].length === 0) {

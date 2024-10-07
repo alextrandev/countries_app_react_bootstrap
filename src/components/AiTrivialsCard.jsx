@@ -11,7 +11,7 @@ export default function AiTrivialsCard({ country }) {
   const dispatch = useDispatch();
   const trivialsLoading = useSelector((state) => state.trivials.isLoading);
   const currentTrivial = useSelector((state) => state.trivials.currentTrivial[countryCode]);
-  const isInitialized = useSelector((state) => state.trivials.isInitialized);
+  const isInitialized = useSelector((state) => state.trivials.isInitialized[countryCode]);
 
   return (
     <Row>
