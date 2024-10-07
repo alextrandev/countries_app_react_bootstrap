@@ -35,13 +35,20 @@ export const getTrivialsFromSource = (cca3) => async (dispatch) => {
   dispatch(setLoading(false));
 }
 
-export const showTrivial = (cca3) => (state, dispatch) => {
-  if (state.trivials.length == 0) {
-    getTrivialsFromSource(cca3);
+export const showTrivial = (cca3) => async (dispatch, getState) => {
+  let state = getState().trivials;
+
+  if (state.trivials.length === 0) {
+    await dispatch(getTrivialsFromSource(cca3));
+    state = getState().trivials;
   }
-  dispatch(setCurrentTrivial(state.trivials[0]));
-  dispatch(getTrivials(state.trivials.slice(1)));
-}
+
+  if (state.trivials.length > 0) {
+    const current = state.trivials[0];
+    dispatch(setCurrentTrivial(current));
+    dispatch(getTrivials(state.trivials.slice(1)));
+  }
+};
 
 export const {getTrivials, setLoading, setInitialized, setCurrentTrivial} = trivialsSlice.actions;
 
