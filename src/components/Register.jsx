@@ -36,7 +36,7 @@ export default function Register() {
 
   return (
 
-    <Container fluid>
+    <Container fluid className="p-5">
       <Header title="Register" />
       <Form >
         <FormGroup name="Full name" id="fullname">

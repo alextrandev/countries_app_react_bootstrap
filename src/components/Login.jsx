@@ -35,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <Container fluid>
+    <Container fluid className="p-5">
       <Header title="Login" />
       <Form>
         <FormGroup name="Email address" id="email">

@@ -39,7 +39,7 @@ export default function Countries() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className="p-5">
       <Header title="View all countries" />
       {/* search bar */}
       <Row className="gap-5 m-1">

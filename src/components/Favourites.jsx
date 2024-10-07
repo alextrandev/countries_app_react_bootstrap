@@ -39,7 +39,7 @@ export default function Favourites() {
   }
 
   return (
-    <Container fluid>
+    <Container fluid className="p-5">
       <Header title="Your favourite countries" />
       <Row className="mb-3">
         <Col className="d-flex justify-content-start">
