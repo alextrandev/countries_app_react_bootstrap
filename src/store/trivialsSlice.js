@@ -46,6 +46,7 @@ export const showTrivial = (cca3) => async (dispatch, getState) => {
   if (state.trivials.length > 0) {
     const current = state.trivials[0];
     dispatch(setCurrentTrivial(current));
+    dispatch(setInitialized(true));
     dispatch(getTrivials(state.trivials.slice(1)));
   }
 };
