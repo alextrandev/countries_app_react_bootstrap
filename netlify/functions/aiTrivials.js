@@ -32,7 +32,7 @@ router.get("/fetch-trivials", async (req, res) => {
 
   try {
     // this is just test response to save api token
-    // return res.status(200).json(testResponse);
+    return res.status(200).json(testResponse);
 
     // generate question in the required format
     const completion = await openai.chat.completions.create({

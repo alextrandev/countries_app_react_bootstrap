@@ -10,7 +10,7 @@ export default function AiTrivialsCard({ country }) {
   const countryCode = country.cca3;
   const dispatch = useDispatch();
   const trivialsLoading = useSelector((state) => state.trivials.isLoading);
-  const currentTrivial = useSelector((state) => state.trivials.currentTrivial);
+  const currentTrivial = useSelector((state) => state.trivials.currentTrivial[countryCode]);
   const isInitialized = useSelector((state) => state.trivials.isInitialized);
 
   return (
@@ -33,7 +33,7 @@ export default function AiTrivialsCard({ country }) {
         {isInitialized &&
           <ListGroup className="list-group-flush">
             {!trivialsLoading
-              ? <ListGroup.Item className='bg-light'>{currentTrivial.fact}</ListGroup.Item>
+              ? <ListGroup.Item className='bg-light'>{currentTrivial?.fact}</ListGroup.Item>
               : <>
                 <LoadingScreen>
                   <p>Looking for fact about {countryName} {country.flag}<br />Please wait</p>
