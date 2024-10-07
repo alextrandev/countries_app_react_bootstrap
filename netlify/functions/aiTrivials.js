@@ -2,7 +2,13 @@ import OpenAI from "openai";
 import sampleResponse from "../lib/sampleAiTrivialsResponse.json";
 import express from 'express';
 import serverless from 'serverless-http';
+import dotenv from 'dotenv';
 
+// Load environment variables from .env file during local development
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
+configDotenv
 const api = express();
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
