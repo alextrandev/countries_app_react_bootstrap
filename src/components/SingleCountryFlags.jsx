@@ -1,26 +1,36 @@
-import { Card, CardGroup, Row } from "react-bootstrap";
+import { Card, CardGroup } from "react-bootstrap";
 
 export default function SingleCountryFlags({ country }) {
   return (
-    <CardGroup>
-      <Card>
-        <Card.Img variant="top" src={country.flags.svg} />
+    <CardGroup className="d-flex justify-content-center">
+      {/* Flag and description */}
+      <Card style={{ maxWidth: "75%" }}>
+        <Card.Img
+          variant="top"
+          src={country.flags.svg}
+          style={{ maxHeight: '400px', width: 'auto', objectFit: 'contain' }}
+        />
         <Card.Body>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {country.flags.alt || `Flag of ${country.name.official}`}
           </Card.Text>
         </Card.Body>
       </Card>
-      <Card>
-        <Card.Img variant="top" src={country.flags.svg} />
-        <Card.Body>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
-        </Card.Body>
-      </Card>
+      {/* Coat of arms image and desciption. Some countries dont have coat of arms */}
+      {country.coatOfArms.svg &&
+        <Card>
+          <Card.Img
+            variant="top"
+            src={country.coatOfArms.svg}
+            style={{ maxHeight: '400px', width: 'auto', objectFit: 'contain' }}
+          />
+          <Card.Body>
+            <Card.Text>
+              {country.coatOfArms.alt || `Coat of Arms of ${country.name.official}`}
+            </Card.Text>
+          </Card.Body>
+        </Card>
+      }
     </CardGroup>
   )
 }
