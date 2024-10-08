@@ -2,9 +2,9 @@ import { Card, CardGroup } from "react-bootstrap";
 
 export default function SingleCountryFlags({ country }) {
   return (
-    <CardGroup className="d-flex justify-content-center">
+    <CardGroup className="d-flex justify-content-center bg-light shadow text-center">
       {/* Flag and description */}
-      <Card style={{ maxWidth: "75%" }}>
+      <Card style={{ maxWidth: "75%" }} bg="light">
         <Card.Img
           variant="top"
           src={country.flags.svg}
@@ -18,7 +18,7 @@ export default function SingleCountryFlags({ country }) {
       </Card>
       {/* Coat of arms image and desciption. Some countries dont have coat of arms */}
       {country.coatOfArms.svg &&
-        <Card>
+        <Card className="p-3" bg="light">
           <Card.Img
             variant="top"
             src={country.coatOfArms.svg}
