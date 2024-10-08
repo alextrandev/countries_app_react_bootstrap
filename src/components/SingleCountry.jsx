@@ -1,9 +1,10 @@
-import { Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import AiTrivialsCard from "./AiTrivialsCard";
 import SingleCountryFlags from "./SingleCountryFlags";
 import SingleCountryWeather from "./SingleCountryWeather";
+import SingleCountryInfo from "./SingleCountryInfo";
 
 export default function SingleCountry(props) {
   const location = useLocation();
@@ -20,7 +21,8 @@ export default function SingleCountry(props) {
         </Container>
         <SingleCountryFlags country={country} />
         <AiTrivialsCard country={country} />
-        <Row className="px-3">
+        <Row className="d-flex justify-content-between px-2">
+          <SingleCountryInfo country={country} />
           <SingleCountryWeather country={country} />
         </Row>
       </Container>

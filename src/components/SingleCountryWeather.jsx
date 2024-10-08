@@ -23,7 +23,7 @@ export default function SingleCountryWeather({ country }) {
   }
 
   return (
-    <Card style={{ width: '15rem' }} className="shadow" bg="light">
+    <Card style={{ width: '20%' }} className="shadow p-0" bg="light">
       <Card.Img
         variant="top"
         style={{
