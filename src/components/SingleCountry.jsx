@@ -5,6 +5,7 @@ import LoadingScreen from "./LoadingScreen";
 import { fetchWeatherInfo } from "../services/weatherService";
 import Header from "./Header";
 import AiTrivialsCard from "./AiTrivialsCard";
+import SingleCountryFlags from "./SingleCountryFlags";
 
 export default function SingleCountry(props) {
   const location = useLocation();
@@ -29,8 +30,14 @@ export default function SingleCountry(props) {
 
   return (
     <>
-      <Container fluid className="p-5">
-        <Header title={`${country.name.common} ${country.flag}`} />
+      <Container fluid className="p-5 d-flex flex-column gap-3">
+        <Container >
+          <Header title={`${country.name.common} ${country.flag}`} />
+          <Row className="text-center">
+            <h4>{`Official: ${country.name.official}`}</h4>
+          </Row>
+        </Container>
+        <SingleCountryFlags country={country} />
         <AiTrivialsCard country={country} />
         <Row className="d-flex flex-column align-items-center">
           <Col className="mt-5 d-flex flex-column justify-content-center">
