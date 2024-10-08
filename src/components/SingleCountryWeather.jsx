@@ -24,49 +24,47 @@ export default function SingleCountryWeather({ country }) {
 
   return (
     <Row className="d-flex flex-column align-items-center">
-      <Col className="mt-5 d-flex flex-column justify-content-center">
+      <Card style={{ width: '15rem' }} className="shadow" bg="light">
         <Card.Img
           variant="top"
-          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-          alt="weather icon"
-          className="rounded h-50"
           style={{
-            objectFit: "cover",
-            minHeight: "200px",
-            maxHeight: "50px",
-            maxWidth: "200px"
+            width: "150px",
+            height: "150px",
+            alignSelf: "center",
+            scale: "120%"
           }}
+          src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
         />
-        <Card.Title>{weather.name}</Card.Title>
-        <Card.Subtitle className="mb-5 text-muted">
-          {dateTimeString}<br />
-          {capitalized(weather.weather[0].description)}
-        </Card.Subtitle>
-      </Col>
-      <Col>
-        <ListGroup variant="flush" className="flex-grow-1 justify-content-center">
+        <Card.Body>
+          <Card.Title>{weather.name}</Card.Title>
+          <Card.Text>
+            {dateTimeString}<br />
+            {capitalized(weather.weather[0].description)}
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush pb-4">
           {/* temperature */}
-          <ListGroup.Item>
+          <ListGroup.Item className="bg-light">
             <i className="bi bi-thermometer-half me-2 w-10"> Temperature: {roundTemp(weather.main.temp)}&deg;C</i>
           </ListGroup.Item>
           {/* feel like */}
-          <ListGroup.Item>
+          <ListGroup.Item className="bg-light">
             <i className="bi bi-emoji-smile me-2"> Feel like: {roundTemp(weather.main.feels_like)}&deg;C</i>
           </ListGroup.Item>
           {/* temp high */}
-          <ListGroup.Item>
+          <ListGroup.Item className="bg-light">
             <i className="bi bi-thermometer-sun me-2"> High: {roundTemp(weather.main.temp_max)}&deg;C</i>
           </ListGroup.Item>
           {/* temp low */}
-          <ListGroup.Item>
+          <ListGroup.Item className="bg-light">
             <i className="bi bi-thermometer-snow me-2"> Low: {roundTemp(weather.main.temp_min)}&deg;C</i>
           </ListGroup.Item>
           {/* temp low */}
-          <ListGroup.Item>
+          <ListGroup.Item className="bg-light">
             <i className="bi bi-moisture me-2"> Humidity: {weather.main.humidity}</i>
           </ListGroup.Item>
         </ListGroup>
-      </Col>
+      </Card>
     </Row>
   )
 }
