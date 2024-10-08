@@ -43,26 +43,28 @@ export default function SingleCountryWeather({ country }) {
       </Card.Body>
       <ListGroup className="list-group-flush pb-4">
         {/* temperature */}
-        <ListGroup.Item className="bg-light">
-          <i className="bi bi-thermometer-half me-2 w-10"> Temperature: {roundTemp(weather.main.temp)}&deg;C</i>
-        </ListGroup.Item>
+        <ListItem icon="thermometer-half" text="Temperature" stat={`${roundTemp(weather.main.temp)}°C`} />
         {/* feel like */}
-        <ListGroup.Item className="bg-light">
-          <i className="bi bi-emoji-smile me-2"> Feel like: {roundTemp(weather.main.feels_like)}&deg;C</i>
-        </ListGroup.Item>
+        <ListItem icon="emoji-smile" text="Feel like" stat={`${roundTemp(weather.main.feels_like)}°C`} />
         {/* temp high */}
-        <ListGroup.Item className="bg-light">
-          <i className="bi bi-thermometer-sun me-2"> High: {roundTemp(weather.main.temp_max)}&deg;C</i>
-        </ListGroup.Item>
+        <ListItem icon="thermometer-sun" text="High" stat={`${roundTemp(weather.main.temp_max)}°C`} />
         {/* temp low */}
-        <ListGroup.Item className="bg-light">
-          <i className="bi bi-thermometer-snow me-2"> Low: {roundTemp(weather.main.temp_min)}&deg;C</i>
-        </ListGroup.Item>
-        {/* temp low */}
-        <ListGroup.Item className="bg-light">
-          <i className="bi bi-moisture me-2"> Humidity: {weather.main.humidity}</i>
-        </ListGroup.Item>
+        <ListItem icon="thermometer-snow" text="Low" stat={`${roundTemp(weather.main.temp_min)}°C`} />
+        {/* humidity */}
+        <ListItem icon="moisture" text="Humidity" stat={weather.main.humidity} />
       </ListGroup>
     </Card>
+  )
+}
+
+function ListItem({ icon, text, stat }) {
+  return (
+    <ListGroup.Item className="bg-light d-flex justify-content-between">
+      <div className="d-flex gap-2">
+        <i className={`bi bi-${icon} ml-2`} />
+        <p className="p-0 m-0">{text}:</p>
+      </div>
+      <p className="p-0 m-0">{stat}</p>
+    </ListGroup.Item>
   )
 }
