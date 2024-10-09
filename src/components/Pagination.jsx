@@ -3,7 +3,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPagination } from '../store/countriesSlice';
 
-export default function _Pagination({ count }) {
+export default function _Pagination({ count, isDisabled }) {
   // const [active, setActive] = useState(1);
   const active = useSelector(state => state.countries.currentPagination);
   const dispatch = useDispatch();
@@ -28,6 +28,7 @@ export default function _Pagination({ count }) {
       <Pagination.Item
         key={number}
         active={active === number}
+        disabled={isDisabled}
         onClick={() => setActive(number)}
       >
         {number}
@@ -46,11 +47,11 @@ export default function _Pagination({ count }) {
   return (
     <Pagination>
       <Pagination.First
-        disabled={active === 1}
+        disabled={active === 1 || isDisabled}
         onClick={() => setActive(1)}
       />
       <Pagination.Prev
-        disabled={active === 1}
+        disabled={active === 1 || isDisabled}
         onClick={() => setActive(active - 1)}
       />
 
@@ -69,11 +70,11 @@ export default function _Pagination({ count }) {
       <Item number={count} />
 
       <Pagination.Next
-        disabled={active === count}
+        disabled={active === count || isDisabled}
         onClick={() => setActive(active + 1)}
       />
       <Pagination.Last
-        disabled={active === count}
+        disabled={active === count || isDisabled}
         onClick={() => setActive(count)}
       />
     </Pagination>

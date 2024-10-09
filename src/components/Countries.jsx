@@ -36,11 +36,13 @@ export default function Countries() {
 
   // pagination math
   const COUNTRY_PER_PAGE = 10;
-  const paginationCount = filteredCountries.length / COUNTRY_PER_PAGE;
+  const paginationCount = countries.length / COUNTRY_PER_PAGE;
   const paginationStartingIndex = (currentPagination - 1) * COUNTRY_PER_PAGE;
   const paginationEndingIndex = paginationStartingIndex + COUNTRY_PER_PAGE;
   const displayingCountries = filteredCountries
     .slice(paginationStartingIndex, paginationEndingIndex);
+  // disable pagination when searching
+  const isDisabled = !!searchInput;
 
   if (isLoading) {
     return <LoadingScreen />
@@ -52,7 +54,7 @@ export default function Countries() {
       {/* search bar */}
       <Row className="gap-5 m-1">
         <Col>
-          <Pagination count={paginationCount} />
+          <Pagination count={paginationCount} isDisabled={isDisabled} />
         </Col>
         <Col className="mb-2 d-flex justify-content-end">
           <Form>
