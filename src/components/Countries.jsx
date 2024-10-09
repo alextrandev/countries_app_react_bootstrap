@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { initializeCountries } from "../services/countriesServices";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
@@ -14,26 +14,28 @@ export default function Countries() {
   const isLoading = useSelector(state => state.countries.isLoading);
   const searchInput = useSelector(state => state.countries.search);
 
-  // console.log(countries[0]);
-
   useEffect(() => {
     dispatch(initializeCountries())
   }, [dispatch]);
 
-  function debounce(func, timeout = 300) {
+  // debounce function
+  function debounce(func, timeout = 450) {
     let timer;
     return (...args) => {
       clearTimeout(timer);
       timer = setTimeout(() => { func.apply(this, args); }, timeout);
     };
   }
+
+  // debounced search function
+  const debouncedSearch = useCallback(debounce((value) => {
+    dispatch(search(value));
+  }, 450), [dispatch]);
+
   const filteredCountries = countries.filter(country => {
     return country.name.common.toLowerCase().includes(searchInput.toLowerCase())
   });
-  // console.log(filteredCountries); 
-  // to do ... firgure out debound filter
 
-  // loading screen
   if (isLoading) {
     return <LoadingScreen />
   }
@@ -51,17 +53,17 @@ export default function Countries() {
               className="me-2"
               placeholder="Search"
               aria-label="Search"
-              onChange={e => dispatch(search(e.target.value))}
+              onChange={e => debouncedSearch(e.target.value)}
             />
           </Form>
         </Col>
       </Row>
-      {/* country cards */}
+      {/* sountry cards */}
       <Row xs={2} md={3} lg={4} className="g-3">
-        {countries.map(country => (
+        {filteredCountries.map(country => (
           <CountryCard country={country} key={country.cca3} />
         ))}
       </Row>
-    </Container >
+    </Container>
   )
 }
