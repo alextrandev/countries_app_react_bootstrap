@@ -5,20 +5,7 @@ export default function _Pagination() {
   const [active, setActive] = useState(1);
   const count = 300; // Total number of pages
 
-  const Item = ({ number }) => {
-    return (
-      <Pagination.Item
-        key={number}
-        active={active === number}
-        onClick={() => setActive(number)}
-      >
-        {number}
-      </Pagination.Item>
-    )
-  }
-
-
-  {/* Show items based on the logic */ }
+  {/* Decive start and end of displayed pagination items based on the logic */ }
   let start, end;
   if (active < 5) {
     start = 2;
@@ -31,6 +18,19 @@ export default function _Pagination() {
     end = active + 2;
   }
 
+  // this is a single pagination item
+  const Item = ({ number }) => {
+    return (
+      <Pagination.Item
+        key={number}
+        active={active === number}
+        onClick={() => setActive(number)}
+      >
+        {number}
+      </Pagination.Item>
+    )
+  }
+
   // this array hold the current shown item based on currently active
   let displayItems = [];
   for (let number = start; number <= end; number++) {
@@ -41,8 +41,14 @@ export default function _Pagination() {
 
   return (
     <Pagination>
-      <Pagination.First />
-      <Pagination.Prev />
+      <Pagination.First
+        disabled={active === 1}
+        onClick={() => setActive(1)}
+      />
+      <Pagination.Prev
+        disabled={active === 1}
+        onClick={() => setActive(active - 1)}
+      />
 
       {/* The first item should always be shown */}
       <Item number={1} />
@@ -58,8 +64,14 @@ export default function _Pagination() {
       {/* The last item should always be shown */}
       <Item number={count} />
 
-      <Pagination.Next />
-      <Pagination.Last />
+      <Pagination.Next
+        disabled={active === count}
+        onClick={() => setActive(active + 1)}
+      />
+      <Pagination.Last
+        disabled={active === count}
+        onClick={() => setActive(count)}
+      />
     </Pagination>
   );
 }
