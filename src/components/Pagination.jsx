@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPagination } from '../store/countriesSlice';
@@ -8,6 +8,11 @@ export default function _Pagination({ count }) {
   const active = useSelector(state => state.countries.currentPagination);
   const dispatch = useDispatch();
   const setActive = (number) => dispatch(setPagination(number));
+
+  // Reset active to 1 if the count change (when changing continent or search)
+  useEffect(() => {
+    setActive(1);
+  }, [count]);
 
   {/* Decive start and end of displayed pagination items based on the logic */ }
   let start, end;
