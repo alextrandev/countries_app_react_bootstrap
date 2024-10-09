@@ -5,6 +5,7 @@ import AiTrivialsCard from "./AiTrivialsCard";
 import SingleCountryFlags from "./SingleCountryFlags";
 import SingleCountryWeather from "./SingleCountryWeather";
 import SingleCountryInfo from "./SingleCountryInfo";
+import SingleCountryLeafletMap from "./SingleCountryLeafletMap";
 
 export default function SingleCountry(props) {
   const location = useLocation();
@@ -25,6 +26,7 @@ export default function SingleCountry(props) {
           <SingleCountryInfo country={country} />
           <SingleCountryWeather country={country} />
         </Row>
+        <SingleCountryLeafletMap country={country} />
       </Container>
     </>
   )
