@@ -14,16 +14,17 @@ const DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 export default function SingleCountryLeafletMap({ country }) {
+  const countryName = country.name.common;
+
   return (
-    <Card className='shadow p-0'>
+    <Card className='shadow p-0 overflow-hidden'>
       <Card.Header>
-        <Card.Title>Map of {country.name.common}</Card.Title>
+        <Card.Title>Map of {countryName}</Card.Title>
         <Card.Text>
           <span>Powered by </span>
           <a className='text-black' href="https://leafletjs.com/">Leaflet</a>
           <span>. Map by </span>
           <a className='text-black' href="https://www.openstreetmap.org/#map=5/51.50/-0.10">OpenStreetMap</a>
-
         </Card.Text>
       </Card.Header>
       <Card.Body className='bg-light'>
@@ -32,17 +33,22 @@ export default function SingleCountryLeafletMap({ country }) {
             height: 600,
             minWidth: '40vw',
           }}
-          center={[51.505, -0.09]}
-          zoom={13}
+          center={country.latlng}
+          zoom={6}
           scrollWheelZoom={false}
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[51.505, -0.09]}>
+          <Marker position={country.capitalInfo.latlng}>
             <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
+              <Card className='border-0'>
+                <Card.Body className='p-0 m-0'>
+                  <Card.Title>{country.capital[0]}</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">Capital of {countryName}</Card.Subtitle>
+                  <Card.Link href={`https://en.wikipedia.org/wiki/${country.capital[0]}`}>Wiki link</Card.Link>
+                </Card.Body>
+              </Card>
             </Popup>
           </Marker>
         </MapContainer>

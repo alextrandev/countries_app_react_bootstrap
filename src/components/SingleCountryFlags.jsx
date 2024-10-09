@@ -4,7 +4,7 @@ export default function SingleCountryFlags({ country }) {
   return (
     <CardGroup className="d-flex justify-content-center bg-light shadow text-center">
       {/* Flag and description */}
-      <Card style={{ maxWidth: "75%" }} bg="light">
+      <Card style={{ maxWidth: "75%" }} bg="light" className="p-2">
         <Card.Img
           variant="top"
           src={country.flags.svg}
