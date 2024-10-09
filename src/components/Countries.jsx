@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Container, Form, Row } from "react-bootstrap";
+import { Card, Col, Container, Form, Nav, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
 import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
@@ -63,30 +63,60 @@ export default function Countries() {
   return (
     <Container fluid className="p-5">
       <Header title="View all countries" />
-      {/* search bar */}
-      <Row className="gap-5 m-1">
-        <Col>
-          <Pagination count={paginationCount} isDisabled={isDisabled} />
-        </Col>
-        <Col className="mb-2 d-flex justify-content-end">
-          <Form>
-            <Form.Control
-              style={{ width: "18rem" }}
-              type="search"
-              className="me-2"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={e => debouncedSearch(e.target.value)}
-            />
-          </Form>
-        </Col>
-      </Row>
-      {/* sountry cards */}
-      <Row xs={1} md={3} lg={5}>
-        {displayingCountries.map(country => (
-          <CountryCard country={country} key={country.cca3} />
-        ))}
-      </Row>
+      <Card>
+        <Card.Header>
+          <Nav variant="tabs" defaultActiveKey="#all">
+            <Nav.Item>
+              <Nav.Link href="#all">All</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#europe">Europe</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#asia">Asia</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#americas">Americas</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#africa">Africa</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#oceania">Oceania</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#antarctic">Antarctic</Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Card.Header>
+        <Card.Body>
+          <Row className="gap-5 m-1">
+            {/* pagination bar */}
+            <Col>
+              <Pagination count={paginationCount} isDisabled={isDisabled} />
+            </Col>
+            {/* search bar */}
+            <Col className="mb-2 d-flex justify-content-end">
+              <Form>
+                <Form.Control
+                  style={{ width: "18rem" }}
+                  type="search"
+                  className="me-2"
+                  placeholder="Search"
+                  aria-label="Search"
+                  onChange={e => debouncedSearch(e.target.value)}
+                />
+              </Form>
+            </Col>
+          </Row>
+          {/* countriy cards container */}
+          <Row xs={1} md={3} lg={5}>
+            {displayingCountries.map(country => (
+              <CountryCard country={country} key={country.cca3} />
+            ))}
+          </Row>
+        </Card.Body>
+      </Card>
     </Container>
   )
 }
