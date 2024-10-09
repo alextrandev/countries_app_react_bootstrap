@@ -59,7 +59,7 @@ export default function Countries() {
         </Col>
       </Row>
       {/* sountry cards */}
-      <Row xs={2} md={3} lg={4} className="g-3">
+      <Row xs={1} md={3} lg={5}>
         {filteredCountries.map(country => (
           <CountryCard country={country} key={country.cca3} />
         ))}
