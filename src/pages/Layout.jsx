@@ -15,7 +15,7 @@ const Layout = () => {
   return (
     <Container fluid>
       <Row>
-        <Navbar bg="light" variant="light">
+        <Navbar bg="dark" data-bs-theme="dark">
           <Container className="justify-content-end">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
@@ -50,6 +50,27 @@ const Layout = () => {
       </Row>
       <Row>
         <Outlet />
+      </Row>
+      <Row>
+        <Navbar bg="dark" data-bs-theme="dark">
+          <Container className="justify-content-between align-content-center">
+            <p className='text-white p-2 m-0'>
+              <span>By </span>
+              <a
+                className='text-white'
+                href="https//alextran.dev"
+              >Alex Tran</a>
+            </p>
+            <p className='text-white p-2 m-0'>
+              <a
+                className='text-white'
+                href="https//alextran.dev"
+              >View source code
+                <i class="bi bi-github ms-2"></i>
+              </a>
+            </p>
+          </Container>
+        </Navbar>
       </Row>
     </Container>
   );
