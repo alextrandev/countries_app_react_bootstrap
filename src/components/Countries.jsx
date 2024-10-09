@@ -7,9 +7,13 @@ import LoadingScreen from "./LoadingScreen";
 import Header from "./Header";
 import Pagination from "./Pagination";
 import { getFavouritesFromSource } from "../store/favouritesSlice";
+import { debounce } from "../functions/functions";
+import { useLocation } from "react-router-dom";
 
 export default function Countries() {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const hash = location.hash;
 
   const countries = useSelector(state => state.countries.countries);
   const favouritesLoading = useSelector((state) => state.favourites.isLoading);
@@ -17,18 +21,16 @@ export default function Countries() {
   const searchInput = useSelector(state => state.countries.search);
   const currentPagination = useSelector(state => state.countries.currentPagination);
 
+  // filter countries based on link hash (continent)
+  let filteredCountries = countries;
+  if (["#europe", "#asia", "#americas", "#africa", "#oceania", "#antarctic"].includes(hash)) {
+    // simple country filter based on region field. slice the hash because it have a # at the start
+    filteredCountries = countries.filter(country => country.region.toLowerCase() == hash.slice(1).toLowerCase())
+  }
+
   useEffect(() => {
     dispatch(getFavouritesFromSource());
   }, [dispatch])
-
-  // debounce function
-  function debounce(func, timeout = 450) {
-    let timer;
-    return (...args) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => { func.apply(this, args); }, timeout);
-    };
-  }
 
   // debounced search function
   const debouncedSearch = useCallback(debounce((value) => {
@@ -36,25 +38,18 @@ export default function Countries() {
   }, 450), [dispatch]);
 
   // filtering countries based on search
-  const filteredCountries = countries.filter(country => {
+  const searchedFilteredCountries = filteredCountries.filter(country => {
     return country.name.common.toLowerCase().includes(searchInput.toLowerCase())
   });
 
   // pagination math
   const COUNTRY_PER_PAGE = 15;
   // ceil here to ensure no float on the last pagination count
-  const paginationCount = Math.ceil(countries.length / COUNTRY_PER_PAGE);
+  const paginationCount = Math.ceil(searchedFilteredCountries.length / COUNTRY_PER_PAGE);
   const paginationStartingIndex = (currentPagination - 1) * COUNTRY_PER_PAGE;
   const paginationEndingIndex = paginationStartingIndex + COUNTRY_PER_PAGE;
   // below check is to disable pagination when searching
-  let isDisabled, displayingCountries
-  if (searchInput) {
-    isDisabled = true;
-    displayingCountries = filteredCountries;
-  } else {
-    displayingCountries = filteredCountries.slice(paginationStartingIndex, paginationEndingIndex);
-    isDisabled = false;
-  }
+  const displayingCountries = searchedFilteredCountries.slice(paginationStartingIndex, paginationEndingIndex);
 
   if (countriesLoading || favouritesLoading) {
     return <LoadingScreen />
@@ -93,7 +88,7 @@ export default function Countries() {
           <Row className="gap-5 m-1">
             {/* pagination bar */}
             <Col>
-              <Pagination count={paginationCount} isDisabled={isDisabled} />
+              <Pagination count={paginationCount} />
             </Col>
             {/* search bar */}
             <Col className="mb-2 d-flex justify-content-end">

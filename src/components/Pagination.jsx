@@ -3,7 +3,7 @@ import Pagination from 'react-bootstrap/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPagination } from '../store/countriesSlice';
 
-export default function _Pagination({ count, isDisabled }) {
+export default function _Pagination({ count }) {
   // const [active, setActive] = useState(1);
   const active = useSelector(state => state.countries.currentPagination);
   const dispatch = useDispatch();
@@ -11,7 +11,10 @@ export default function _Pagination({ count, isDisabled }) {
 
   {/* Decive start and end of displayed pagination items based on the logic */ }
   let start, end;
-  if (active < 5) {
+  if (count < 9) {
+    start = 2;
+    end = count - 1;
+  } else if (active < 5) {
     start = 2;
     end = 6;
   } else if (active > count - 4) {
@@ -28,7 +31,6 @@ export default function _Pagination({ count, isDisabled }) {
       <Pagination.Item
         key={number}
         active={active === number}
-        disabled={isDisabled}
         onClick={() => setActive(number)}
       >
         {number}
@@ -47,11 +49,11 @@ export default function _Pagination({ count, isDisabled }) {
   return (
     <Pagination>
       <Pagination.First
-        disabled={active === 1 || isDisabled}
+        disabled={active === 1}
         onClick={() => setActive(1)}
       />
       <Pagination.Prev
-        disabled={active === 1 || isDisabled}
+        disabled={active === 1}
         onClick={() => setActive(active - 1)}
       />
 
@@ -66,15 +68,15 @@ export default function _Pagination({ count, isDisabled }) {
       {/* show the Ellipsis when active is not the last 4 */}
       {active < count - 3 && <Pagination.Ellipsis disabled />}
 
-      {/* The last item should always be shown */}
-      <Item number={count} key={count} />
+      {/* The last item should always be shown  except when there is only one page*/}
+      {count > 1 && <Item number={count} key={count} />}
 
       <Pagination.Next
-        disabled={active === count || isDisabled}
+        disabled={active === count}
         onClick={() => setActive(active + 1)}
       />
       <Pagination.Last
-        disabled={active === count || isDisabled}
+        disabled={active === count}
         onClick={() => setActive(count)}
       />
     </Pagination>
