@@ -10,9 +10,19 @@ import Login from "./components/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./auth/firebase";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { initializeCountries } from "./services/countriesServices";
+import { getFavouritesFromSource } from "./store/favouritesSlice";
 
 function App() {
   const [user, loading] = useAuthState(auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initializeCountries());
+    dispatch(getFavouritesFromSource());
+  }, [])
 
   return (
     <BrowserRouter>

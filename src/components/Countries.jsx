@@ -1,6 +1,5 @@
-import { useEffect, useCallback } from "react";
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeCountries } from "../services/countriesServices";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
 import CountryCard from "./CountryCard";
@@ -13,10 +12,6 @@ export default function Countries() {
   const countries = useSelector(state => state.countries.countries);
   const isLoading = useSelector(state => state.countries.isLoading);
   const searchInput = useSelector(state => state.countries.search);
-
-  useEffect(() => {
-    dispatch(initializeCountries())
-  }, [dispatch]);
 
   // debounce function
   function debounce(func, timeout = 450) {

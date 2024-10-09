@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeCountries } from "../services/countriesServices";
 import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
 import CountryCard from "./CountryCard";
@@ -30,7 +29,6 @@ export default function Favourites() {
   }
 
   useEffect(() => {
-    dispatch(initializeCountries());
     dispatch(getFavouritesFromSource());
   }, [dispatch])
 
