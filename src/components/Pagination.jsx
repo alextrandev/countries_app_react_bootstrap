@@ -3,12 +3,11 @@ import Pagination from 'react-bootstrap/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPagination } from '../store/countriesSlice';
 
-export default function _Pagination() {
+export default function _Pagination({ count }) {
   // const [active, setActive] = useState(1);
   const active = useSelector(state => state.countries.currentPagination);
   const dispatch = useDispatch();
   const setActive = (number) => dispatch(setPagination(number));
-  const count = 300; // Total number of pages
 
   {/* Decive start and end of displayed pagination items based on the logic */ }
   let start, end;
