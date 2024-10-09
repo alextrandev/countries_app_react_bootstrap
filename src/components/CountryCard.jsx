@@ -40,7 +40,7 @@ export default function CountryCard({ country }) {
               className="m-0 w-100"
               style={{ borderRadius: "0" }}
             >
-              <i class="bi bi-heartbreak me-2"></i>
+              <i className="bi bi-heartbreak me-2"></i>
               Remove from favorites
             </Button>
             : <Button
@@ -49,7 +49,7 @@ export default function CountryCard({ country }) {
               className="m-0 w-100"
               style={{ borderRadius: "0" }}
             >
-              <i class="bi bi-heart me-2"></i>
+              <i className="bi bi-heart me-2"></i>
               Add to favorites {country.flag}
             </Button>
           }

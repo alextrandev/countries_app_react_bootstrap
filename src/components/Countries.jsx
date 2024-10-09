@@ -41,7 +41,7 @@ export default function Countries() {
   });
 
   // pagination math
-  const COUNTRY_PER_PAGE = 10;
+  const COUNTRY_PER_PAGE = 15;
   // ceil here to ensure no float on the last pagination count
   const paginationCount = Math.ceil(countries.length / COUNTRY_PER_PAGE);
   const paginationStartingIndex = (currentPagination - 1) * COUNTRY_PER_PAGE;

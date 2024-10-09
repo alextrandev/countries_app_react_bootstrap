@@ -40,7 +40,7 @@ export default function _Pagination({ count, isDisabled }) {
   let displayItems = [];
   for (let number = start; number <= end; number++) {
     displayItems.push(
-      <Item number={number} />
+      <Item number={number} key={number} />
     );
   }
 
@@ -56,7 +56,7 @@ export default function _Pagination({ count, isDisabled }) {
       />
 
       {/* The first item should always be shown */}
-      <Item number={1} />
+      <Item number={1} key={1} />
 
       {/* show the Ellipsis when active is not the first 4 */}
       {active > 4 && <Pagination.Ellipsis disabled />}
@@ -67,7 +67,7 @@ export default function _Pagination({ count, isDisabled }) {
       {active < count - 3 && <Pagination.Ellipsis disabled />}
 
       {/* The last item should always be shown */}
-      <Item number={count} />
+      <Item number={count} key={count} />
 
       <Pagination.Next
         disabled={active === count || isDisabled}
