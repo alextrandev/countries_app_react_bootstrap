@@ -1,12 +1,14 @@
-import { Container, ListGroup, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router-dom";
 import { addFavourite, removeFavourites } from "../store/favouritesSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CountryCard({ country }) {
   const dispatch = useDispatch();
+  const favourites = useSelector(state => state.favourites.favourites);
+  const isFavourite = favourites.includes(country.cca3);
 
   return (
     <Container className="mb-4">
@@ -31,20 +33,24 @@ export default function CountryCard({ country }) {
           </Link>
         </Card.Body>
         <Card.Footer className="p-0 overflow-hidden">
-          <Button
-            variant="primary"
-            onClick={() => dispatch(addFavourite(country.cca3))}
-            className="m-0 w-100"
-            style={{ borderRadius: "0" }}
-          >
-            Add to favorites {country.flag}
-          </Button>
-          {/* <Button
+          {isFavourite
+            ? <Button
               variant="warning"
               onClick={() => dispatch(removeFavourites(country.cca3))}
+              className="m-0 w-100"
+              style={{ borderRadius: "0" }}
             >
               Remove from favorites
-            </Button> */}
+            </Button>
+            : <Button
+              variant="primary"
+              onClick={() => dispatch(addFavourite(country.cca3))}
+              className="m-0 w-100"
+              style={{ borderRadius: "0" }}
+            >
+              Add to favorites {country.flag}
+            </Button>
+          }
         </Card.Footer>
       </Card>
     </Container>
