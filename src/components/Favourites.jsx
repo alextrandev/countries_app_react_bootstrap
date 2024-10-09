@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { initializeCountries } from "../services/countriesServices";
-import { Button, Col, Container, Row, Form } from "react-bootstrap";
+import { Button, Col, Container, Row, Form, Card } from "react-bootstrap";
 import { clearFavourites, getFavouritesFromSource } from "../store/favouritesSlice";
 import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
@@ -30,7 +29,6 @@ export default function Favourites() {
   }
 
   useEffect(() => {
-    dispatch(initializeCountries());
     dispatch(getFavouritesFromSource());
   }, [dispatch])
 
@@ -41,28 +39,34 @@ export default function Favourites() {
   return (
     <Container fluid className="p-5">
       <Header title="Your favourite countries" />
-      <Row className="mb-3">
-        <Col className="d-flex justify-content-start">
-          <Button variant="danger" onClick={() => dispatch(clearFavourites())}>Clear favourites</Button>
-        </Col>
-        <Col className="d-flex justify-content-end">
-          <Form>
-            <Form.Control
-              style={{ width: "18rem" }}
-              type="search"
-              className="me-2"
-              placeholder="Search"
-              aria-label="Search"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </Form>
-        </Col>
-      </Row>
-      <Row xs={2} md={3} lg={4} className="g-3">
-        {countriesList.map((country) => (
-          <CountryCard key={country.name.common} country={country} />
-        ))}
-      </Row>
+      <Card>
+        <Card.Header>
+          <Row>
+            <Col className="d-flex justify-content-start">
+              <Button variant="danger" onClick={() => dispatch(clearFavourites())}>Clear favourites</Button>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <Form>
+                <Form.Control
+                  style={{ width: "18rem" }}
+                  type="search"
+                  className="me-2"
+                  placeholder="Search"
+                  aria-label="Search"
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </Form>
+            </Col>
+          </Row>
+        </Card.Header>
+        <Card.Body>
+          <Row xs={1} md={3} lg={5}>
+            {countriesList.map((country) => (
+              <CountryCard key={country.name.common} country={country} />
+            ))}
+          </Row>
+        </Card.Body>
+      </Card>
     </Container >
   )
 }

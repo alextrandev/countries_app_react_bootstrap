@@ -1,9 +1,8 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
-import { getFavouritesFromSource } from "../store/favouritesSlice";
 import { Form, FormGroup } from "./Form";
 import { toast } from "react-toastify";
 import Header from "./Header";
