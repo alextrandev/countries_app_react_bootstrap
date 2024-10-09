@@ -5,6 +5,7 @@ import { search } from "../store/countriesSlice";
 import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
 import Header from "./Header";
+import Pagination from "./Pagination";
 
 export default function Countries() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ export default function Countries() {
       <Header title="View all countries" />
       {/* search bar */}
       <Row className="gap-5 m-1">
+        <Col>
+          <Pagination />
+        </Col>
         <Col className="mb-2 d-flex justify-content-end">
           <Form>
             <Form.Control
