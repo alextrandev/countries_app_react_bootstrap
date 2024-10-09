@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Col, Container, Form, Row } from "react-bootstrap";
 import { search } from "../store/countriesSlice";
@@ -6,14 +6,20 @@ import CountryCard from "./CountryCard";
 import LoadingScreen from "./LoadingScreen";
 import Header from "./Header";
 import Pagination from "./Pagination";
+import { getFavouritesFromSource } from "../store/favouritesSlice";
 
 export default function Countries() {
   const dispatch = useDispatch();
 
   const countries = useSelector(state => state.countries.countries);
-  const isLoading = useSelector(state => state.countries.isLoading);
+  const favouritesLoading = useSelector((state) => state.favourites.isLoading);
+  const countriesLoading = useSelector((state) => state.countries.isLoading);
   const searchInput = useSelector(state => state.countries.search);
   const currentPagination = useSelector(state => state.countries.currentPagination);
+
+  useEffect(() => {
+    dispatch(getFavouritesFromSource());
+  }, [dispatch])
 
   // debounce function
   function debounce(func, timeout = 450) {
@@ -36,15 +42,21 @@ export default function Countries() {
 
   // pagination math
   const COUNTRY_PER_PAGE = 10;
-  const paginationCount = countries.length / COUNTRY_PER_PAGE;
+  // ceil here to ensure no float on the last pagination count
+  const paginationCount = Math.ceil(countries.length / COUNTRY_PER_PAGE);
   const paginationStartingIndex = (currentPagination - 1) * COUNTRY_PER_PAGE;
   const paginationEndingIndex = paginationStartingIndex + COUNTRY_PER_PAGE;
-  const displayingCountries = filteredCountries
-    .slice(paginationStartingIndex, paginationEndingIndex);
-  // disable pagination when searching
-  const isDisabled = !!searchInput;
+  // below check is to disable pagination when searching
+  let isDisabled, displayingCountries
+  if (searchInput) {
+    isDisabled = true;
+    displayingCountries = filteredCountries;
+  } else {
+    displayingCountries = filteredCountries.slice(paginationStartingIndex, paginationEndingIndex);
+    isDisabled = false;
+  }
 
-  if (isLoading) {
+  if (countriesLoading || favouritesLoading) {
     return <LoadingScreen />
   }
 
