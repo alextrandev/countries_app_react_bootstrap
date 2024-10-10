@@ -3,7 +3,7 @@ import Header from "./Header";
 import CountriesPagePreview from "./CountriesPagePreview";
 import SingleCountryPagePreview from "./SingleCountryPagePreview";
 
-export default function Home() {
+export default function Home({ user }) {
   return (
     <Container fluid className="p-5">
       <Header title="Welcome to Countries App!" />
@@ -22,7 +22,7 @@ export default function Home() {
           </Card.Subtitle>
         </Card.Body>
       </Card>
-      <CountriesPagePreview />
+      <CountriesPagePreview user={user} />
       {/* some advertisement about the favourites page and firebase */}
       <Card border="0" className="p-3">
         <Card.Body>
@@ -35,7 +35,7 @@ export default function Home() {
           </Card.Subtitle>
         </Card.Body>
       </Card>
-      <SingleCountryPagePreview />
+      <SingleCountryPagePreview user={user} />
       {/* some advertisement about the favourites page and firebase */}
       <Card border="0" className="p-3">
         <Card.Body>

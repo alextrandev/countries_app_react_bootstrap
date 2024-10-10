@@ -1,9 +1,8 @@
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
 
-export default function HomepagePreview() {
+export default function HomepagePreview({ user }) {
   return (
     <Card className='d-flex flex-row p-3'>
       <Card.Body>
@@ -22,12 +21,8 @@ export default function HomepagePreview() {
           To experience full function of the app, please login or register!
         </Card.Text>
         <Container className='d-flex gap-2 p-0'>
-          <Link to="/login">
-            <Button variant="primary">Login here</Button>
-          </Link>
-          <Link to="/register">
-            <Button variant="secondary">Or register a new account</Button>
-          </Link>
+          <Button href="/login" variant="primary" disabled={user}>Login here</Button>
+          <Button href='/register' variant="secondary" disabled={user}>Or register a new account</Button>
         </Container>
       </Card.Body>
       <Card.Img variant="top" src="/gifs/countries-page-preview.gif" style={{ borderRadius: "5px" }} />

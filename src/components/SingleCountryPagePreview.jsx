@@ -1,9 +1,9 @@
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
 
-export default function SingleCountryPagePreview() {
+export default function SingleCountryPagePreview({ user }) {
+
   return (
     <Card className='d-flex flex-row p-3'>
       <Card.Img variant="top" src="/gifs/single-countries-preview.gif" style={{ borderRadius: "5px" }} />
@@ -28,12 +28,8 @@ export default function SingleCountryPagePreview() {
           To use the single country page, please login or register!
         </Card.Text>
         <Container className='d-flex gap-2 p-0'>
-          <Link to="/login">
-            <Button variant="primary">Login here</Button>
-          </Link>
-          <Link to="/register">
-            <Button variant="secondary">Or register a new account</Button>
-          </Link>
+          <Button href="/login" variant="primary" disabled={user}>Login here</Button>
+          <Button href='/register' variant="secondary" disabled={user}>Or register a new account</Button>
         </Container>
       </Card.Body>
     </Card>

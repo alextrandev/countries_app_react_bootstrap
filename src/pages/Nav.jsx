@@ -14,7 +14,7 @@ export default function _Nav() {
     <Row className='shadow sticky-top'>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container className="justify-content-start">
-          <Navbar.Brand href="#home" className='d-flex align-items-center'>
+          <Navbar.Brand href="/" className='d-flex align-items-center'>
             <Image
               variant="top"
               src="/images/logo.png"
