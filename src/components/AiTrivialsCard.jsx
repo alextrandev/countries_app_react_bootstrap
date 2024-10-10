@@ -34,7 +34,13 @@ export default function AiTrivialsCard({ country }) {
       {isInitialized &&
         <ListGroup className="list-group-flush">
           {!trivialsLoading
-            ? <ListGroup.Item className='bg-light'>{currentTrivial?.fact}</ListGroup.Item>
+            ? <ListGroup.Item className='bg-light m-5'>
+              <Card.Title className='d-flex gap-3 align-items-center' style={{ fontSize: "2rem" }}>
+                <i className="bi bi-quote"></i>
+                <span>{currentTrivial?.fact}</span>
+                <i className="bi bi-quote"></i>
+              </Card.Title>
+            </ListGroup.Item>
             : <>
               <LoadingScreen>
                 <p>Looking for fact about {countryName} {country.flag}<br />Please wait</p>
