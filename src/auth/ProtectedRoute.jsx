@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
 import LoadingScreen from "../components/LoadingScreen"
+import { toast } from "react-toastify"
 
 const Protectedroute = ({ user, loading }) => {
   if (loading) {
@@ -7,6 +8,9 @@ const Protectedroute = ({ user, loading }) => {
   }
 
   if (!user) {
+    toast.warn("Please login or register first", {
+      toastId: 'requirelogin',
+    });
     return <Navigate to="/login" />
   }
   return <Outlet />
