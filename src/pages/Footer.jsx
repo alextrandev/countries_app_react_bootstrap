@@ -4,6 +4,8 @@ import Row from 'react-bootstrap/Row';
 import 'react-toastify/dist/ReactToastify.css';
 import { Image } from 'react-bootstrap';
 
+//TO DO: using something other than Navbar for the footer
+
 export default function Footer() {
   return (
     <Row className='sticky-bottom'>

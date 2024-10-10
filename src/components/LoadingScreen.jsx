@@ -9,6 +9,7 @@ export default function LoadingScreen({ children }) {
         className="center"
         variant="info"
       />
+      {/* this children is usually text for extra clarity in some cases */}
       {children}
     </Col>
   )

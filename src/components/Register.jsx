@@ -17,6 +17,7 @@ export default function Register() {
 
   const navigate = useNavigate();
 
+  // redirect on logged in
   useEffect(() => {
     if (user) {
       navigate("/favourites");
@@ -31,8 +32,6 @@ export default function Register() {
     }
     registerWithEmailAndPassword(name, email, password);
   }
-
-  // TODO: Add a check to see if user if logged in and navigate to countries
 
   return (
 

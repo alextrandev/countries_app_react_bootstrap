@@ -22,6 +22,7 @@ export default function Home({ user }) {
           </Card.Subtitle>
         </Card.Body>
       </Card>
+      {/* a preview card for the countries page */}
       <CountriesPagePreview user={user} />
       {/* some advertisement about the favourites page and firebase */}
       <Card border="0" className="p-3">
@@ -35,6 +36,7 @@ export default function Home({ user }) {
           </Card.Subtitle>
         </Card.Body>
       </Card>
+      {/* a preview card for single country page */}
       <SingleCountryPagePreview user={user} />
       {/* some advertisement about the favourites page and firebase */}
       <Card border="0" className="p-3">

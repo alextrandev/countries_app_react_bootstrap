@@ -3,7 +3,7 @@ import sampleResponse from "../lib/sampleAiTrivialsResponse.json";
 import express, { Router } from 'express';
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
-import testResponse from "../lib/testResponse";
+// import testResponse from "../lib/testResponse";
 
 // Load environment variables from .env file during local development
 if (process.env.NODE_ENV !== 'production') {
@@ -32,7 +32,7 @@ router.get("/fetch-trivials", async (req, res) => {
   `;
 
   try {
-    // below is just test response to save api token
+    // below is just test response to save api token. uncomment when testing to save API tokens
     // return res.status(200).json(testResponse);
 
     // generate question in the required format

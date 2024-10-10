@@ -1,4 +1,4 @@
-import { Button, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,9 +6,11 @@ import { showTrivial } from '../store/trivialsSlice';
 import LoadingScreen from './LoadingScreen';
 
 export default function AiTrivialsCard({ country }) {
+  const dispatch = useDispatch();
+
   const countryName = country.name.common;
   const countryCode = country.cca3;
-  const dispatch = useDispatch();
+
   const trivialsLoading = useSelector((state) => state.trivials.isLoading);
   const currentTrivial = useSelector((state) => state.trivials.currentTrivial[countryCode]);
   const isInitialized = useSelector((state) => state.trivials.isInitialized[countryCode]);
