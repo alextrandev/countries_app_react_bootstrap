@@ -110,6 +110,11 @@ export default function Countries() {
               <CountryCard country={country} key={country.cca3} />
             ))}
           </Row>
+          <Row className="justify-content-center">
+            <Col xs="auto">
+              <Pagination count={paginationCount} />
+            </Col>
+          </Row>
         </Card.Body>
       </Card>
     </Container>
