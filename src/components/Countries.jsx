@@ -58,7 +58,7 @@ export default function Countries() {
   return (
     <Container fluid className="p-5">
       <Header title="View all countries" />
-      <Card>
+      <Card className="shadow">
         <Card.Header>
           <Nav variant="tabs" defaultActiveKey="#all">
             <Nav.Item>

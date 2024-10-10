@@ -7,17 +7,19 @@ export default function Footer() {
   return (
     <Row className='sticky-bottom'>
       <Navbar bg="dark" data-bs-theme="dark">
-        <Container className="justify-content-between align-content-center">
+        <Container fluid className="justify-content-between align-content-center">
           <p className='text-white p-2 m-0'>
             <span>By </span>
             <a
               className='text-white'
+              target='blank'
               href="https//alextran.dev"
             >Alex Tran</a>
           </p>
           <p className='text-white p-2 m-0'>
             <a
               className='text-white'
+              target='blank'
               href="https//alextran.dev"
             >View source code
               <i class="bi bi-github ms-2"></i>
