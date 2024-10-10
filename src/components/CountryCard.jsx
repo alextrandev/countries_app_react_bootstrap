@@ -12,7 +12,7 @@ export default function CountryCard({ country }) {
 
   return (
     <Container className="mb-4">
-      <Card className="h-100 p-0" bg="light">
+      <Card className="h-100 p-0 shadow-sm" bg="light">
         <Link to={`/countries/${country.cca3}`} className="link-underline link-underline-opacity-0" state={{ country: country }}>
           <Card.Img
             variant="top"
