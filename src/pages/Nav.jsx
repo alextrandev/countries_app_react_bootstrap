@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 import { auth, logout } from '../auth/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Row } from 'react-bootstrap';
+import { Image, Row } from 'react-bootstrap';
 
 export default function _Nav() {
   const [user] = useAuthState(auth);
@@ -14,6 +14,16 @@ export default function _Nav() {
     <Row className='shadow sticky-top'>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container className="justify-content-start">
+          <Navbar.Brand href="#home" className='d-flex align-items-center'>
+            <Image
+              variant="top"
+              src="/images/logo.png"
+              alt="Alex logo"
+              className='ms-1'
+              style={{ height: "25px" }}
+            />
+            <span>Countries App</span>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
