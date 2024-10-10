@@ -1,4 +1,5 @@
 import { Card, CardGroup, ListGroup } from "react-bootstrap";
+import { capitalize } from "../functions/functions";
 
 export default function SingleCountryInfo({ country }) {
   // some data processing and string manipulation
@@ -6,7 +7,9 @@ export default function SingleCountryInfo({ country }) {
   const countryCurrencies = Object.values(country.currencies || {})
     .map(currency => ` ${currency.name} (${currency.symbol})`)
     .join(", ");
-  const countryLanguages = Object.keys(country.languages || {}).join(", ");
+  const countryLanguages = Object.keys(country.languages || {})
+    .map(key => capitalize(key))
+    .join(", ");
   const phonePrefixes = country.idd.suffixes
     .map((suffix) => country.idd.root + suffix)
     .join(", ");
@@ -28,8 +31,8 @@ export default function SingleCountryInfo({ country }) {
           <ListItem title={"Region"} value={country.region} />
           <ListItem title={"Subregion"} value={country.subregion} />
           <ListItem title={"Continents"} value={country.continents} />
-          <ListItem title={"Area"} value={country.area} />
-          <ListItem title={"Population"} value={country.population} />
+          <ListItem title={"Area (km²)"} value={country.area.toLocaleString()} />
+          <ListItem title={"Population"} value={country.population.toLocaleString()} />
           <ListItem title={"Member of the UN"} value={yesNo(country.unMember)} />
           <ListItem title={"Languages"} value={countryLanguages} />
           <ListItem title={"Currencies"} value={countryCurrencies} />
@@ -47,9 +50,9 @@ export default function SingleCountryInfo({ country }) {
           <ListItem title={"Independent"} value={yesNo(country.independent)} />
           <ListItem title={"Land locked"} value={yesNo(country.landlocked)} />
           <ListItem title={"Timezone"} value={country.timezones[0]} />
-          <ListItem title={"Start of week"} value={country.startOfWeek} />
+          <ListItem title={"Start of week"} value={capitalize(country.startOfWeek)} />
           <ListItem title={"Car signs"} value={country.car.signs.join(", ")} />
-          <ListItem title={"Car side"} value={country.car.side} />
+          <ListItem title={"Car side"} value={capitalize(country.car.side)} />
         </ListGroup>
       </Card>
     </CardGroup>
