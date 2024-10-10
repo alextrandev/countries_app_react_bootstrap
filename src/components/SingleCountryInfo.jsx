@@ -1,6 +1,7 @@
 import { Card, CardGroup, ListGroup } from "react-bootstrap";
 
 export default function SingleCountryInfo({ country }) {
+  // some data processing and string manipulation
   const countryName = country.name.common;
   const countryCurrencies = Object.values(country.currencies || {})
     .map(currency => ` ${currency.name} (${currency.symbol})`)
@@ -10,6 +11,7 @@ export default function SingleCountryInfo({ country }) {
     .map((suffix) => country.idd.root + suffix)
     .join(", ");
 
+  // turn boolean in to yes or no string
   const yesNo = (bool) => bool ? "Yes" : "No";
 
   return (

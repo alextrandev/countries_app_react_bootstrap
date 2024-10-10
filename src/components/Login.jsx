@@ -14,6 +14,7 @@ export default function Login() {
 
   const navigate = useNavigate();
 
+  // redirect when logged in
   useEffect(() => {
     if (user) {
       navigate("/favourites");

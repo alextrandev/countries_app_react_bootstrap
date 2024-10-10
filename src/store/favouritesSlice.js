@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFavouriteToFirebase, auth, clearFavouritesFromFireBase, db, getFavouritesFromFirebase, removeFavouriteFormFirebase } from "../auth/firebase";
-import { collection, getDocs, query } from "firebase/firestore";
+import { addFavouriteToFirebase, auth, clearFavouritesFromFireBase, getFavouritesFromFirebase, removeFavouriteFormFirebase } from "../auth/firebase";
 
 const initialState = {
   favourites: [],

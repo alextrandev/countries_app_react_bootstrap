@@ -14,18 +14,23 @@ export default function SingleCountry(props) {
   return (
     <>
       <Container fluid className="p-5 d-flex flex-column gap-5">
+        {/* name and official name */}
         <Container >
           <Header title={`${country.name.common} ${country.flag}`} />
           <Row className="text-center">
             <h4>{`Official name: ${country.name.official}`}</h4>
           </Row>
         </Container>
+        {/* flag section */}
         <SingleCountryFlags country={country} />
+        {/* AI trivial section */}
         <AiTrivialsCard country={country} />
+        {/* info and weather sections */}
         <Row className="d-flex justify-content-between px-2">
           <SingleCountryInfo country={country} />
           <SingleCountryWeather country={country} />
         </Row>
+        {/* map */}
         <SingleCountryLeafletMap country={country} />
       </Container>
     </>
