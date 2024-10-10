@@ -31,7 +31,7 @@ export default function Footer() {
               target='blank'
               href="https//alextran.dev"
             >View source code
-              <i class="bi bi-github ms-2"></i>
+              <i className="bi bi-github ms-2"></i>
             </a>
           </p>
         </Container>
