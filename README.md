@@ -80,10 +80,10 @@ VITE_FIREBASE_API_KEY=your_key_here
 
 
 ## Preview
-**Countries page**
+### Countries page
 ![countries preview](./public/gifs/countries-page-preview.gif)
 
-**Single country page**
+### Single country page
 ![single country preview](./public/gifs/single-countries-preview.gif)
 
 ## Authors and acknowledgment

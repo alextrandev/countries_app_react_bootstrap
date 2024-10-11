@@ -34,8 +34,7 @@ export default function Register() {
   }
 
   return (
-
-    <Container fluid className="p-5">
+    <Container className="p-5 d-flex flex-column align-items-center" >
       <Header title="Register" />
       <Form >
         <FormGroup name="Full name" id="fullname">
@@ -69,7 +68,7 @@ export default function Register() {
           />
         </FormGroup>
         <div className="form-group d-flex gap-3 py-3">
-          <Button onClick={handleRegister}>Register</Button>
+          <Button className="w-100" onClick={handleRegister}>Register</Button>
         </div>
       </Form>
     </Container>

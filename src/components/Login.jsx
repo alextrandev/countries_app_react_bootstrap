@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useEffect, useState } from "react";
-import { Button, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { Form, FormGroup } from "./Form";
 import { toast } from "react-toastify";
@@ -35,7 +35,7 @@ export default function Login() {
   };
 
   return (
-    <Container fluid className="p-5">
+    <Container className="p-5 d-flex flex-column align-items-center" >
       <Header title="Login" />
       <Form>
         <FormGroup name="Email address" id="email">
@@ -61,6 +61,7 @@ export default function Login() {
         <div className="form-group d-flex gap-3 py-3">
           <Button
             onClick={handleLogin}
+            className="px-4"
           >
             Login
           </Button>
