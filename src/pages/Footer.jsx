@@ -16,7 +16,7 @@ export default function Footer() {
             <a
               className='text-white'
               target='blank'
-              href="https//alextran.dev"
+              href="https://alextran.dev"
             >Alex Tran
               <Image
                 variant="top"
@@ -31,7 +31,7 @@ export default function Footer() {
             <a
               className='text-white'
               target='blank'
-              href="https//alextran.dev"
+              href="https://github.com/alextrandev/countries_app_react_bootstrap"
             >View source code
               <i className="bi bi-github ms-2"></i>
             </a>
