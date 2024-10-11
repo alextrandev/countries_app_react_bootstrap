@@ -1,7 +1,7 @@
 // just a form wrapper to reuse
 export function Form({ children }) {
   return (
-    <div className="p-5 pt-0">
+    <div className="p-5 pt-0" style={{ minWidth: "450px" }}>
       {children}
     </div>
   )
