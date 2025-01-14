@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInAnonymously, signInWithEmailAndPassword, signOut} from "firebase/auth";
 import {addDoc, collection, deleteDoc, getDocs, getFirestore, query, where} from "firebase/firestore";
 import { toast } from "react-toastify";
 
@@ -38,6 +38,17 @@ const loginWithEmailAndPassword = async (email, password) => {
         console.log("Error", error.message);
         return;
     }
+  }
+}
+
+const anonymousLogin = async () => {
+  try {
+    await signInAnonymously(auth);
+    toast.success('Successfully logged in as anonymous user!');
+  }
+  catch (error) {
+    console.log("Error", error.message);
+    toast.error('Something went wrong. Please try again!');
   }
 }
 
@@ -148,7 +159,8 @@ const clearFavouritesFromFireBase = async (uid) => {
 export {
   auth, 
   db, 
-  loginWithEmailAndPassword, 
+  loginWithEmailAndPassword,
+  anonymousLogin,
   registerWithEmailAndPassword,
   logout,
   getFavouritesFromFirebase,
