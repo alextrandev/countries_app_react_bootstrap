@@ -1,5 +1,5 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, loginWithEmailAndPassword } from "../auth/firebase";
+import { anonymousLogin, auth, loginWithEmailAndPassword } from "../auth/firebase";
 import { useEffect, useState } from "react";
 import { Button, Card, Container } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
@@ -66,6 +66,16 @@ export default function Login() {
             Login
           </Button>
           <Button variant="secondary" onClick={() => navigate("/register")}>Don't have an account? Register here</Button>
+        </div>
+        <p className="text-center">Or</p>
+        <div className="form-group d-flex w-100">
+          <Button
+            variant="primary"
+            onClick={anonymousLogin}
+            className="w-100"
+          >
+            Login as anonymous user!
+          </Button>
         </div>
       </Form >
     </Container>
