@@ -1,6 +1,7 @@
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { anonymousLogin } from '../auth/firebase';
 
 export default function HomepagePreview({ user }) {
   return (
@@ -23,6 +24,7 @@ export default function HomepagePreview({ user }) {
         <Container className='d-flex gap-2 p-0'>
           <Button href="/login" variant="primary" disabled={user}>Login here</Button>
           <Button href='/register' variant="secondary" disabled={user}>Or register a new account</Button>
+          <Button onClick={anonymousLogin} variant="primary" disabled={user}>Or Login as anonymous user!</Button>
         </Container>
       </Card.Body>
       <Card.Img variant="top" src="/gifs/countries-page-preview.gif" style={{ borderRadius: "5px" }} />
