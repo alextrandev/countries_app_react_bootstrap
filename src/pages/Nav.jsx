@@ -51,7 +51,7 @@ export default function _Nav() {
           </Navbar.Collapse>
         </Container>
         <Container className="justify-content-end text-white">
-          Welcome, {user ? user.email : "guest"}!
+          Welcome, {user?.email ?? "guest"}!
         </Container>
       </Navbar>
     </Row>
